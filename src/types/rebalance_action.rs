@@ -6,15 +6,13 @@
 //!
 
 use crate::types::DexSpecificPrice;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RebalanceAction {
-NewPriceRange(DexSpecificPrice, DexSpecificPrice),
-NewTickRange(i32, i32),
-WithdrawAndFreeze,
+    NewPriceRange(DexSpecificPrice, DexSpecificPrice),
+    NewTickRange(i32, i32),
+    WithdrawAndFreeze,
 }
-
-

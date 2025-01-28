@@ -5,14 +5,12 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct PositionRewardInfo {
-pub growth_inside_checkpoint: u128,
-pub amount_owed: u64,
+    pub growth_inside_checkpoint: u128,
+    pub amount_owed: u64,
 }
-
-

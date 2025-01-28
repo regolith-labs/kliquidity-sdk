@@ -5,29 +5,30 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use solana_program::pubkey::Pubkey;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
+use solana_program::pubkey::Pubkey;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CollateralInfo {
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub mint: Pubkey,
-pub lower_heuristic: u64,
-pub upper_heuristic: u64,
-pub exp_heuristic: u64,
-pub max_twap_divergence_bps: u64,
-pub scope_twap_price_chain: [u16; 4],
-pub scope_price_chain: [u16; 4],
-pub name: [u8; 32],
-pub max_age_price_seconds: u64,
-pub max_age_twap_seconds: u64,
-pub max_ignorable_amount_as_reward: u64,
-pub disabled: u8,
-pub padding0: [u8; 7],
-pub scope_staking_rate_chain: [u16; 4],
-pub padding: [u64; 8],
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub mint: Pubkey,
+    pub lower_heuristic: u64,
+    pub upper_heuristic: u64,
+    pub exp_heuristic: u64,
+    pub max_twap_divergence_bps: u64,
+    pub scope_twap_price_chain: [u16; 4],
+    pub scope_price_chain: [u16; 4],
+    pub name: [u8; 32],
+    pub max_age_price_seconds: u64,
+    pub max_age_twap_seconds: u64,
+    pub max_ignorable_amount_as_reward: u64,
+    pub disabled: u8,
+    pub padding0: [u8; 7],
+    pub scope_staking_rate_chain: [u16; 4],
+    pub padding: [u64; 8],
 }
-
-

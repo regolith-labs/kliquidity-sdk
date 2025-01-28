@@ -6,17 +6,15 @@
 //!
 
 use crate::types::Price;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceAutodriftWindow {
-pub staking_rate_a: Option<Price>,
-pub staking_rate_b: Option<Price>,
-pub epoch: u64,
-pub theoretical_tick: i32,
-pub strat_mid_tick: i32,
+    pub staking_rate_a: Option<Price>,
+    pub staking_rate_b: Option<Price>,
+    pub epoch: u64,
+    pub theoretical_tick: i32,
+    pub strat_mid_tick: i32,
 }
-
-

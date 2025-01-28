@@ -5,204 +5,301 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use solana_program::pubkey::Pubkey;
-use crate::types::WithdrawalCaps;
 use crate::types::KaminoRewardInfo;
 use crate::types::Price;
 use crate::types::RebalanceRaw;
-use borsh::BorshSerialize;
+use crate::types::WithdrawalCaps;
 use borsh::BorshDeserialize;
-
+use borsh::BorshSerialize;
+use solana_program::pubkey::Pubkey;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct WhirlpoolStrategy {
-pub discriminator: [u8; 8],
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub admin_authority: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub global_config: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub base_vault_authority: Pubkey,
-pub base_vault_authority_bump: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub pool: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub pool_token_vault_a: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub pool_token_vault_b: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub tick_array_lower: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub tick_array_upper: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub position: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub position_mint: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub position_metadata: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub position_token_account: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_a_vault: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_b_vault: Pubkey,
-pub deprecated0: [Pubkey; 2],
-pub deprecated1: [u64; 2],
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_a_mint: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_b_mint: Pubkey,
-pub token_a_mint_decimals: u64,
-pub token_b_mint_decimals: u64,
-pub token_a_amounts: u64,
-pub token_b_amounts: u64,
-pub token_a_collateral_id: u64,
-pub token_b_collateral_id: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub scope_prices: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub deprecated2: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub shares_mint: Pubkey,
-pub shares_mint_decimals: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub shares_mint_authority: Pubkey,
-pub shares_mint_authority_bump: u64,
-pub shares_issued: u64,
-pub status: u64,
-pub reward0_amount: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub reward0_vault: Pubkey,
-pub reward0_collateral_id: u64,
-pub reward0_decimals: u64,
-pub reward1_amount: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub reward1_vault: Pubkey,
-pub reward1_collateral_id: u64,
-pub reward1_decimals: u64,
-pub reward2_amount: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub reward2_vault: Pubkey,
-pub reward2_collateral_id: u64,
-pub reward2_decimals: u64,
-pub deposit_cap_usd: u64,
-pub fees_a_cumulative: u64,
-pub fees_b_cumulative: u64,
-pub reward0_amount_cumulative: u64,
-pub reward1_amount_cumulative: u64,
-pub reward2_amount_cumulative: u64,
-pub deposit_cap_usd_per_ixn: u64,
-pub withdrawal_cap_a: WithdrawalCaps,
-pub withdrawal_cap_b: WithdrawalCaps,
-pub max_price_deviation_bps: u64,
-pub swap_vault_max_slippage_bps: u32,
-pub swap_vault_max_slippage_from_reference_bps: u32,
-pub strategy_type: u64,
-pub padding0: u64,
-pub withdraw_fee: u64,
-pub fees_fee: u64,
-pub reward0_fee: u64,
-pub reward1_fee: u64,
-pub reward2_fee: u64,
-pub position_timestamp: u64,
-pub kamino_rewards: [KaminoRewardInfo; 3],
-pub strategy_dex: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub raydium_protocol_position_or_base_vault_authority: Pubkey,
-pub allow_deposit_without_invest: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub raydium_pool_config_or_base_vault_authority: Pubkey,
-pub deposit_blocked: u8,
-pub creation_status: u8,
-pub invest_blocked: u8,
-/// share_calculation_method can be either DOLAR_BASED=0 or PROPORTION_BASED=1
-pub share_calculation_method: u8,
-pub withdraw_blocked: u8,
-pub reserved_flag2: u8,
-pub local_admin_blocked: u8,
-pub flash_vault_swap_allowed: u8,
-pub reference_swap_price_a: Price,
-pub reference_swap_price_b: Price,
-pub is_community: u8,
-pub rebalance_type: u8,
-pub padding1: [u8; 6],
-pub rebalance_raw: RebalanceRaw,
-pub padding2: [u8; 7],
-pub token_a_fees_from_rewards_cumulative: u64,
-pub token_b_fees_from_rewards_cumulative: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub strategy_lookup_table: Pubkey,
-pub last_swap_uneven_step_timestamp: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub farm: Pubkey,
-pub rebalances_cap: WithdrawalCaps,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub swap_uneven_authority: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_a_token_program: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub token_b_token_program: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub pending_admin: Pubkey,
-pub padding3: u64,
-pub padding4: [u128; 13],
-pub padding5: [u128; 32],
-pub padding6: [u128; 32],
-pub padding7: [u128; 32],
+    pub discriminator: [u8; 8],
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub admin_authority: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub global_config: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub base_vault_authority: Pubkey,
+    pub base_vault_authority_bump: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub pool: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub pool_token_vault_a: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub pool_token_vault_b: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub tick_array_lower: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub tick_array_upper: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub position: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub position_mint: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub position_metadata: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub position_token_account: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_a_vault: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_b_vault: Pubkey,
+    pub deprecated0: [Pubkey; 2],
+    pub deprecated1: [u64; 2],
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_a_mint: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_b_mint: Pubkey,
+    pub token_a_mint_decimals: u64,
+    pub token_b_mint_decimals: u64,
+    pub token_a_amounts: u64,
+    pub token_b_amounts: u64,
+    pub token_a_collateral_id: u64,
+    pub token_b_collateral_id: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub scope_prices: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub deprecated2: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub shares_mint: Pubkey,
+    pub shares_mint_decimals: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub shares_mint_authority: Pubkey,
+    pub shares_mint_authority_bump: u64,
+    pub shares_issued: u64,
+    pub status: u64,
+    pub reward0_amount: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub reward0_vault: Pubkey,
+    pub reward0_collateral_id: u64,
+    pub reward0_decimals: u64,
+    pub reward1_amount: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub reward1_vault: Pubkey,
+    pub reward1_collateral_id: u64,
+    pub reward1_decimals: u64,
+    pub reward2_amount: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub reward2_vault: Pubkey,
+    pub reward2_collateral_id: u64,
+    pub reward2_decimals: u64,
+    pub deposit_cap_usd: u64,
+    pub fees_a_cumulative: u64,
+    pub fees_b_cumulative: u64,
+    pub reward0_amount_cumulative: u64,
+    pub reward1_amount_cumulative: u64,
+    pub reward2_amount_cumulative: u64,
+    pub deposit_cap_usd_per_ixn: u64,
+    pub withdrawal_cap_a: WithdrawalCaps,
+    pub withdrawal_cap_b: WithdrawalCaps,
+    pub max_price_deviation_bps: u64,
+    pub swap_vault_max_slippage_bps: u32,
+    pub swap_vault_max_slippage_from_reference_bps: u32,
+    pub strategy_type: u64,
+    pub padding0: u64,
+    pub withdraw_fee: u64,
+    pub fees_fee: u64,
+    pub reward0_fee: u64,
+    pub reward1_fee: u64,
+    pub reward2_fee: u64,
+    pub position_timestamp: u64,
+    pub kamino_rewards: [KaminoRewardInfo; 3],
+    pub strategy_dex: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub raydium_protocol_position_or_base_vault_authority: Pubkey,
+    pub allow_deposit_without_invest: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub raydium_pool_config_or_base_vault_authority: Pubkey,
+    pub deposit_blocked: u8,
+    pub creation_status: u8,
+    pub invest_blocked: u8,
+    /// share_calculation_method can be either DOLAR_BASED=0 or PROPORTION_BASED=1
+    pub share_calculation_method: u8,
+    pub withdraw_blocked: u8,
+    pub reserved_flag2: u8,
+    pub local_admin_blocked: u8,
+    pub flash_vault_swap_allowed: u8,
+    pub reference_swap_price_a: Price,
+    pub reference_swap_price_b: Price,
+    pub is_community: u8,
+    pub rebalance_type: u8,
+    pub padding1: [u8; 6],
+    pub rebalance_raw: RebalanceRaw,
+    pub padding2: [u8; 7],
+    pub token_a_fees_from_rewards_cumulative: u64,
+    pub token_b_fees_from_rewards_cumulative: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub strategy_lookup_table: Pubkey,
+    pub last_swap_uneven_step_timestamp: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub farm: Pubkey,
+    pub rebalances_cap: WithdrawalCaps,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub swap_uneven_authority: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_a_token_program: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub token_b_token_program: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub pending_admin: Pubkey,
+    pub padding3: u64,
+    pub padding4: [u128; 13],
+    pub padding5: [u128; 32],
+    pub padding6: [u128; 32],
+    pub padding7: [u128; 32],
 }
 
-
 impl WhirlpoolStrategy {
-      pub const LEN: usize = 4064;
-  
-  
-  
-  #[inline(always)]
-  pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
-    let mut data = data;
-    Self::deserialize(&mut data)
-  }
+    pub const LEN: usize = 4064;
+
+    #[inline(always)]
+    pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
+        let mut data = data;
+        Self::deserialize(&mut data)
+    }
 }
 
 impl<'a> TryFrom<&solana_program::account_info::AccountInfo<'a>> for WhirlpoolStrategy {
-  type Error = std::io::Error;
+    type Error = std::io::Error;
 
-  fn try_from(account_info: &solana_program::account_info::AccountInfo<'a>) -> Result<Self, Self::Error> {
-      let mut data: &[u8] = &(*account_info.data).borrow();
-      Self::deserialize(&mut data)
-  }
+    fn try_from(
+        account_info: &solana_program::account_info::AccountInfo<'a>,
+    ) -> Result<Self, Self::Error> {
+        let mut data: &[u8] = &(*account_info.data).borrow();
+        Self::deserialize(&mut data)
+    }
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_whirlpool_strategy(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::DecodedAccount<WhirlpoolStrategy>, Error> {
-  let accounts = fetch_all_whirlpool_strategy(rpc, vec![address])?;
-  Ok(accounts[0].clone())
+    let accounts = fetch_all_whirlpool_strategy(rpc, vec![address])?;
+    Ok(accounts[0].clone())
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_whirlpool_strategy(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::DecodedAccount<WhirlpoolStrategy>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::DecodedAccount<WhirlpoolStrategy>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      let account = accounts[i].as_ref().ok_or(format!("Account not found: {}", address))?;
-      let data = WhirlpoolStrategy::from_bytes(&account.data)?;
-      decoded_accounts.push(super::DecodedAccount { address, account: account.clone(), data });
+        let address = addresses[i];
+        let account = accounts[i]
+            .as_ref()
+            .ok_or(format!("Account not found: {}", address))?;
+        let data = WhirlpoolStrategy::from_bytes(&account.data)?;
+        decoded_accounts.push(super::DecodedAccount {
+            address,
+            account: account.clone(),
+            data,
+        });
     }
     Ok(decoded_accounts)
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_whirlpool_strategy(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::MaybeAccount<WhirlpoolStrategy>, Error> {
     let accounts = fetch_all_maybe_whirlpool_strategy(rpc, vec![address])?;
     Ok(accounts[0].clone())
@@ -210,46 +307,48 @@ pub fn fetch_maybe_whirlpool_strategy(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_whirlpool_strategy(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::MaybeAccount<WhirlpoolStrategy>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::MaybeAccount<WhirlpoolStrategy>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      if let Some(account) = accounts[i].as_ref() {
-        let data = WhirlpoolStrategy::from_bytes(&account.data)?;
-        decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount { address, account: account.clone(), data }));
-      } else {
-        decoded_accounts.push(super::MaybeAccount::NotFound(address));
-      }
+        let address = addresses[i];
+        if let Some(account) = accounts[i].as_ref() {
+            let data = WhirlpoolStrategy::from_bytes(&account.data)?;
+            decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount {
+                address,
+                account: account.clone(),
+                data,
+            }));
+        } else {
+            decoded_accounts.push(super::MaybeAccount::NotFound(address));
+        }
     }
-  Ok(decoded_accounts)
+    Ok(decoded_accounts)
 }
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountDeserialize for WhirlpoolStrategy {
-      fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountDeserialize for WhirlpoolStrategy {
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
         Ok(Self::deserialize(buf)?)
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountSerialize for WhirlpoolStrategy {}
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountSerialize for WhirlpoolStrategy {}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::Owner for WhirlpoolStrategy {
-      fn owner() -> Pubkey {
+#[cfg(feature = "anchor")]
+impl anchor_lang::Owner for WhirlpoolStrategy {
+    fn owner() -> Pubkey {
         crate::YVAULTS_ID
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::IdlBuild for WhirlpoolStrategy {}
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::IdlBuild for WhirlpoolStrategy {}
 
-  
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::Discriminator for WhirlpoolStrategy {
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::Discriminator for WhirlpoolStrategy {
     const DISCRIMINATOR: [u8; 8] = [0; 8];
-  }
-
+}

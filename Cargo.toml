@@ -16,7 +16,7 @@ name = "kliquidity_sdk"
 path = "src/lib.rs"
 
 [features]
-serde = ["dep:serde"]
+serde = ["dep:serde", "serde-big-array", "serde_with"]
 fetch = []
 anchor = ["anchor-lang"]
 anchor-idl-build = ["anchor-lang"]
@@ -27,5 +27,7 @@ borsh = "0.10.3"
 num-derive = "0.4.2"
 num-traits = "0.2.19"
 serde = { version = "1.0", features = ["derive"], optional = true }
+serde-big-array = { version = "0.5", optional = true }
+serde_with = { version = "3.12", optional = true }
 solana-program = "1.18"
 thiserror = "2.0.11"

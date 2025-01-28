@@ -6,15 +6,13 @@
 //!
 
 use crate::types::RebalanceDriftStep;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceDriftState {
-pub step: RebalanceDriftStep,
-pub last_drift_timestamp: u64,
-pub last_mid_tick: i32,
+    pub step: RebalanceDriftStep,
+    pub last_drift_timestamp: u64,
+    pub last_mid_tick: i32,
 }
-
-

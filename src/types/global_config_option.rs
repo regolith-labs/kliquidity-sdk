@@ -5,36 +5,45 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 use num_derive::FromPrimitive;
 
-#[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq, Copy, PartialOrd, Hash, FromPrimitive)]
+#[derive(
+    BorshSerialize,
+    BorshDeserialize,
+    Clone,
+    Debug,
+    Eq,
+    PartialEq,
+    Copy,
+    PartialOrd,
+    Hash,
+    FromPrimitive,
+)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum GlobalConfigOption {
-EmergencyMode,
-BlockDeposit,
-BlockInvest,
-BlockWithdraw,
-BlockCollectFees,
-BlockCollectRewards,
-BlockSwapRewards,
-BlockSwapUnevenVaults,
-WithdrawalFeeBps,
-SwapDiscountBps,
-ActionsAuthority,
-DeprecatedTreasuryFeeVaults,
-AdminAuthority,
-BlockEmergencySwap,
-BlockLocalAdmin,
-UpdateTokenInfos,
-ScopeProgramId,
-ScopePriceId,
-MinPerformanceFeeBps,
-MinSwapUnevenSlippageToleranceBps,
-MinReferencePriceSlippageToleranceBps,
-ActionsAfterRebalanceDelaySeconds,
-TreasuryFeeVaultReceiver,
+    EmergencyMode,
+    BlockDeposit,
+    BlockInvest,
+    BlockWithdraw,
+    BlockCollectFees,
+    BlockCollectRewards,
+    BlockSwapRewards,
+    BlockSwapUnevenVaults,
+    WithdrawalFeeBps,
+    SwapDiscountBps,
+    ActionsAuthority,
+    DeprecatedTreasuryFeeVaults,
+    AdminAuthority,
+    BlockEmergencySwap,
+    BlockLocalAdmin,
+    UpdateTokenInfos,
+    ScopeProgramId,
+    ScopePriceId,
+    MinPerformanceFeeBps,
+    MinSwapUnevenSlippageToleranceBps,
+    MinReferencePriceSlippageToleranceBps,
+    ActionsAfterRebalanceDelaySeconds,
+    TreasuryFeeVaultReceiver,
 }
-
-

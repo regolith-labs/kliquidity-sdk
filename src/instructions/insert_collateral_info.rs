@@ -5,555 +5,702 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use solana_program::pubkey::Pubkey;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
+use solana_program::pubkey::Pubkey;
 
 /// Accounts.
 pub struct InsertCollateralInfo {
-      
-              
-          pub admin_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub global_config: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_infos: solana_program::pubkey::Pubkey,
-      }
+    pub admin_authority: solana_program::pubkey::Pubkey,
+
+    pub global_config: solana_program::pubkey::Pubkey,
+
+    pub token_infos: solana_program::pubkey::Pubkey,
+}
 
 impl InsertCollateralInfo {
-  pub fn instruction(&self, args: InsertCollateralInfoInstructionArgs) -> solana_program::instruction::Instruction {
-    self.instruction_with_remaining_accounts(args, &[])
-  }
-  #[allow(clippy::vec_init_then_push)]
-  pub fn instruction_with_remaining_accounts(&self, args: InsertCollateralInfoInstructionArgs, remaining_accounts: &[solana_program::instruction::AccountMeta]) -> solana_program::instruction::Instruction {
-    let mut accounts = Vec::with_capacity(3+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            self.admin_authority,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.global_config,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.token_infos,
-            false
-          ));
-                      accounts.extend_from_slice(remaining_accounts);
-    let mut data = InsertCollateralInfoInstructionData::new().try_to_vec().unwrap();
-          let mut args = args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
+    pub fn instruction(
+        &self,
+        args: InsertCollateralInfoInstructionArgs,
+    ) -> solana_program::instruction::Instruction {
+        self.instruction_with_remaining_accounts(args, &[])
     }
-  }
+    #[allow(clippy::vec_init_then_push)]
+    pub fn instruction_with_remaining_accounts(
+        &self,
+        args: InsertCollateralInfoInstructionArgs,
+        remaining_accounts: &[solana_program::instruction::AccountMeta],
+    ) -> solana_program::instruction::Instruction {
+        let mut accounts = Vec::with_capacity(3 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.admin_authority,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.global_config,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.token_infos,
+            false,
+        ));
+        accounts.extend_from_slice(remaining_accounts);
+        let mut data = InsertCollateralInfoInstructionData::new()
+            .try_to_vec()
+            .unwrap();
+        let mut args = args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        }
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct InsertCollateralInfoInstructionData {
-            discriminator: [u8; 8],
-                                                                                          }
+pub struct InsertCollateralInfoInstructionData {
+    discriminator: [u8; 8],
+}
 
 impl InsertCollateralInfoInstructionData {
-  pub fn new() -> Self {
-    Self {
-                        discriminator: [22, 97, 4, 78, 166, 188, 51, 190],
-                                                                                                                                                                                                                      }
-  }
+    pub fn new() -> Self {
+        Self {
+            discriminator: [22, 97, 4, 78, 166, 188, 51, 190],
+        }
+    }
 }
 
 impl Default for InsertCollateralInfoInstructionData {
-  fn default() -> Self {
-    Self::new()
-  }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct InsertCollateralInfoInstructionArgs {
-                  pub index: u64,
-                pub mint: Pubkey,
-                pub lower_heuristic: u64,
-                pub upper_heuristic: u64,
-                pub exp_heuristic: u64,
-                pub max_twap_divergence_bps: u64,
-                pub scope_twap_price_chain: [u16; 4],
-                pub scope_price_chain: [u16; 4],
-                pub name: [u8; 32],
-                pub max_age_price_seconds: u64,
-                pub max_age_twap_seconds: u64,
-                pub max_ignorable_amount_as_reward: u64,
-                pub disabled: u8,
-                pub scope_staking_rate_chain: [u16; 4],
-      }
-
+pub struct InsertCollateralInfoInstructionArgs {
+    pub index: u64,
+    pub mint: Pubkey,
+    pub lower_heuristic: u64,
+    pub upper_heuristic: u64,
+    pub exp_heuristic: u64,
+    pub max_twap_divergence_bps: u64,
+    pub scope_twap_price_chain: [u16; 4],
+    pub scope_price_chain: [u16; 4],
+    pub name: [u8; 32],
+    pub max_age_price_seconds: u64,
+    pub max_age_twap_seconds: u64,
+    pub max_ignorable_amount_as_reward: u64,
+    pub disabled: u8,
+    pub scope_staking_rate_chain: [u16; 4],
+}
 
 /// Instruction builder for `InsertCollateralInfo`.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-          ///   1. `[]` global_config
-                ///   2. `[writable]` token_infos
+///   0. `[writable, signer]` admin_authority
+///   1. `[]` global_config
+///   2. `[writable]` token_infos
 #[derive(Clone, Debug, Default)]
 pub struct InsertCollateralInfoBuilder {
-            admin_authority: Option<solana_program::pubkey::Pubkey>,
-                global_config: Option<solana_program::pubkey::Pubkey>,
-                token_infos: Option<solana_program::pubkey::Pubkey>,
-                        index: Option<u64>,
-                mint: Option<Pubkey>,
-                lower_heuristic: Option<u64>,
-                upper_heuristic: Option<u64>,
-                exp_heuristic: Option<u64>,
-                max_twap_divergence_bps: Option<u64>,
-                scope_twap_price_chain: Option<[u16; 4]>,
-                scope_price_chain: Option<[u16; 4]>,
-                name: Option<[u8; 32]>,
-                max_age_price_seconds: Option<u64>,
-                max_age_twap_seconds: Option<u64>,
-                max_ignorable_amount_as_reward: Option<u64>,
-                disabled: Option<u8>,
-                scope_staking_rate_chain: Option<[u16; 4]>,
-        __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
+    admin_authority: Option<solana_program::pubkey::Pubkey>,
+    global_config: Option<solana_program::pubkey::Pubkey>,
+    token_infos: Option<solana_program::pubkey::Pubkey>,
+    index: Option<u64>,
+    mint: Option<Pubkey>,
+    lower_heuristic: Option<u64>,
+    upper_heuristic: Option<u64>,
+    exp_heuristic: Option<u64>,
+    max_twap_divergence_bps: Option<u64>,
+    scope_twap_price_chain: Option<[u16; 4]>,
+    scope_price_chain: Option<[u16; 4]>,
+    name: Option<[u8; 32]>,
+    max_age_price_seconds: Option<u64>,
+    max_age_twap_seconds: Option<u64>,
+    max_ignorable_amount_as_reward: Option<u64>,
+    disabled: Option<u8>,
+    scope_staking_rate_chain: Option<[u16; 4]>,
+    __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
 }
 
 impl InsertCollateralInfoBuilder {
-  pub fn new() -> Self {
-    Self::default()
-  }
-            #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.admin_authority = Some(admin_authority);
-                    self
+    pub fn new() -> Self {
+        Self::default()
     }
-            #[inline(always)]
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.admin_authority = Some(admin_authority);
+        self
+    }
+    #[inline(always)]
     pub fn global_config(&mut self, global_config: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.global_config = Some(global_config);
-                    self
+        self.global_config = Some(global_config);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_infos(&mut self, token_infos: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_infos = Some(token_infos);
-                    self
+        self.token_infos = Some(token_infos);
+        self
     }
-                    #[inline(always)]
-      pub fn index(&mut self, index: u64) -> &mut Self {
+    #[inline(always)]
+    pub fn index(&mut self, index: u64) -> &mut Self {
         self.index = Some(index);
         self
-      }
-                #[inline(always)]
-      pub fn mint(&mut self, mint: Pubkey) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn mint(&mut self, mint: Pubkey) -> &mut Self {
         self.mint = Some(mint);
         self
-      }
-                #[inline(always)]
-      pub fn lower_heuristic(&mut self, lower_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn lower_heuristic(&mut self, lower_heuristic: u64) -> &mut Self {
         self.lower_heuristic = Some(lower_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn upper_heuristic(&mut self, upper_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn upper_heuristic(&mut self, upper_heuristic: u64) -> &mut Self {
         self.upper_heuristic = Some(upper_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn exp_heuristic(&mut self, exp_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn exp_heuristic(&mut self, exp_heuristic: u64) -> &mut Self {
         self.exp_heuristic = Some(exp_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn max_twap_divergence_bps(&mut self, max_twap_divergence_bps: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_twap_divergence_bps(&mut self, max_twap_divergence_bps: u64) -> &mut Self {
         self.max_twap_divergence_bps = Some(max_twap_divergence_bps);
         self
-      }
-                #[inline(always)]
-      pub fn scope_twap_price_chain(&mut self, scope_twap_price_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_twap_price_chain(&mut self, scope_twap_price_chain: [u16; 4]) -> &mut Self {
         self.scope_twap_price_chain = Some(scope_twap_price_chain);
         self
-      }
-                #[inline(always)]
-      pub fn scope_price_chain(&mut self, scope_price_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_price_chain(&mut self, scope_price_chain: [u16; 4]) -> &mut Self {
         self.scope_price_chain = Some(scope_price_chain);
         self
-      }
-                #[inline(always)]
-      pub fn name(&mut self, name: [u8; 32]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn name(&mut self, name: [u8; 32]) -> &mut Self {
         self.name = Some(name);
         self
-      }
-                #[inline(always)]
-      pub fn max_age_price_seconds(&mut self, max_age_price_seconds: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_age_price_seconds(&mut self, max_age_price_seconds: u64) -> &mut Self {
         self.max_age_price_seconds = Some(max_age_price_seconds);
         self
-      }
-                #[inline(always)]
-      pub fn max_age_twap_seconds(&mut self, max_age_twap_seconds: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_age_twap_seconds(&mut self, max_age_twap_seconds: u64) -> &mut Self {
         self.max_age_twap_seconds = Some(max_age_twap_seconds);
         self
-      }
-                #[inline(always)]
-      pub fn max_ignorable_amount_as_reward(&mut self, max_ignorable_amount_as_reward: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_ignorable_amount_as_reward(
+        &mut self,
+        max_ignorable_amount_as_reward: u64,
+    ) -> &mut Self {
         self.max_ignorable_amount_as_reward = Some(max_ignorable_amount_as_reward);
         self
-      }
-                #[inline(always)]
-      pub fn disabled(&mut self, disabled: u8) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn disabled(&mut self, disabled: u8) -> &mut Self {
         self.disabled = Some(disabled);
         self
-      }
-                #[inline(always)]
-      pub fn scope_staking_rate_chain(&mut self, scope_staking_rate_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_staking_rate_chain(&mut self, scope_staking_rate_chain: [u16; 4]) -> &mut Self {
         self.scope_staking_rate_chain = Some(scope_staking_rate_chain);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: solana_program::instruction::AccountMeta) -> &mut Self {
-    self.__remaining_accounts.push(account);
-    self
-  }
-  /// Add additional accounts to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[solana_program::instruction::AccountMeta]) -> &mut Self {
-    self.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[allow(clippy::clone_on_copy)]
-  pub fn instruction(&self) -> solana_program::instruction::Instruction {
-    let accounts = InsertCollateralInfo {
-                              admin_authority: self.admin_authority.expect("admin_authority is not set"),
-                                        global_config: self.global_config.expect("global_config is not set"),
-                                        token_infos: self.token_infos.expect("token_infos is not set"),
-                      };
-          let args = InsertCollateralInfoInstructionArgs {
-                                                              index: self.index.clone().expect("index is not set"),
-                                                                  mint: self.mint.clone().expect("mint is not set"),
-                                                                  lower_heuristic: self.lower_heuristic.clone().expect("lower_heuristic is not set"),
-                                                                  upper_heuristic: self.upper_heuristic.clone().expect("upper_heuristic is not set"),
-                                                                  exp_heuristic: self.exp_heuristic.clone().expect("exp_heuristic is not set"),
-                                                                  max_twap_divergence_bps: self.max_twap_divergence_bps.clone().expect("max_twap_divergence_bps is not set"),
-                                                                  scope_twap_price_chain: self.scope_twap_price_chain.clone().expect("scope_twap_price_chain is not set"),
-                                                                  scope_price_chain: self.scope_price_chain.clone().expect("scope_price_chain is not set"),
-                                                                  name: self.name.clone().expect("name is not set"),
-                                                                  max_age_price_seconds: self.max_age_price_seconds.clone().expect("max_age_price_seconds is not set"),
-                                                                  max_age_twap_seconds: self.max_age_twap_seconds.clone().expect("max_age_twap_seconds is not set"),
-                                                                  max_ignorable_amount_as_reward: self.max_ignorable_amount_as_reward.clone().expect("max_ignorable_amount_as_reward is not set"),
-                                                                  disabled: self.disabled.clone().expect("disabled is not set"),
-                                                                  scope_staking_rate_chain: self.scope_staking_rate_chain.clone().expect("scope_staking_rate_chain is not set"),
-                                    };
-    
-    accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
-  }
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: solana_program::instruction::AccountMeta,
+    ) -> &mut Self {
+        self.__remaining_accounts.push(account);
+        self
+    }
+    /// Add additional accounts to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[solana_program::instruction::AccountMeta],
+    ) -> &mut Self {
+        self.__remaining_accounts.extend_from_slice(accounts);
+        self
+    }
+    #[allow(clippy::clone_on_copy)]
+    pub fn instruction(&self) -> solana_program::instruction::Instruction {
+        let accounts = InsertCollateralInfo {
+            admin_authority: self.admin_authority.expect("admin_authority is not set"),
+            global_config: self.global_config.expect("global_config is not set"),
+            token_infos: self.token_infos.expect("token_infos is not set"),
+        };
+        let args = InsertCollateralInfoInstructionArgs {
+            index: self.index.clone().expect("index is not set"),
+            mint: self.mint.clone().expect("mint is not set"),
+            lower_heuristic: self
+                .lower_heuristic
+                .clone()
+                .expect("lower_heuristic is not set"),
+            upper_heuristic: self
+                .upper_heuristic
+                .clone()
+                .expect("upper_heuristic is not set"),
+            exp_heuristic: self
+                .exp_heuristic
+                .clone()
+                .expect("exp_heuristic is not set"),
+            max_twap_divergence_bps: self
+                .max_twap_divergence_bps
+                .clone()
+                .expect("max_twap_divergence_bps is not set"),
+            scope_twap_price_chain: self
+                .scope_twap_price_chain
+                .clone()
+                .expect("scope_twap_price_chain is not set"),
+            scope_price_chain: self
+                .scope_price_chain
+                .clone()
+                .expect("scope_price_chain is not set"),
+            name: self.name.clone().expect("name is not set"),
+            max_age_price_seconds: self
+                .max_age_price_seconds
+                .clone()
+                .expect("max_age_price_seconds is not set"),
+            max_age_twap_seconds: self
+                .max_age_twap_seconds
+                .clone()
+                .expect("max_age_twap_seconds is not set"),
+            max_ignorable_amount_as_reward: self
+                .max_ignorable_amount_as_reward
+                .clone()
+                .expect("max_ignorable_amount_as_reward is not set"),
+            disabled: self.disabled.clone().expect("disabled is not set"),
+            scope_staking_rate_chain: self
+                .scope_staking_rate_chain
+                .clone()
+                .expect("scope_staking_rate_chain is not set"),
+        };
+
+        accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
+    }
 }
 
-  /// `insert_collateral_info` CPI accounts.
-  pub struct InsertCollateralInfoCpiAccounts<'a, 'b> {
-          
-                    
-              pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-            }
+/// `insert_collateral_info` CPI accounts.
+pub struct InsertCollateralInfoCpiAccounts<'a, 'b> {
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+}
 
 /// `insert_collateral_info` CPI instruction.
 pub struct InsertCollateralInfoCpi<'a, 'b> {
-  /// The program to invoke.
-  pub __program: &'b solana_program::account_info::AccountInfo<'a>,
-      
-              
-          pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-            /// The arguments for the instruction.
+    /// The program to invoke.
+    pub __program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+    /// The arguments for the instruction.
     pub __args: InsertCollateralInfoInstructionArgs,
-  }
+}
 
 impl<'a, 'b> InsertCollateralInfoCpi<'a, 'b> {
-  pub fn new(
-    program: &'b solana_program::account_info::AccountInfo<'a>,
-          accounts: InsertCollateralInfoCpiAccounts<'a, 'b>,
-              args: InsertCollateralInfoInstructionArgs,
-      ) -> Self {
-    Self {
-      __program: program,
-              admin_authority: accounts.admin_authority,
-              global_config: accounts.global_config,
-              token_infos: accounts.token_infos,
-                    __args: args,
-          }
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], &[])
-  }
-  #[inline(always)]
-  pub fn invoke_with_remaining_accounts(&self, remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
-  }
-  #[inline(always)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed_with_remaining_accounts(
-    &self,
-    signers_seeds: &[&[&[u8]]],
-    remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]
-  ) -> solana_program::entrypoint::ProgramResult {
-    let mut accounts = Vec::with_capacity(3+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.admin_authority.key,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.global_config.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.token_infos.key,
-            false
-          ));
-                      remaining_accounts.iter().for_each(|remaining_account| {
-      accounts.push(solana_program::instruction::AccountMeta {
-          pubkey: *remaining_account.0.key,
-          is_signer: remaining_account.1,
-          is_writable: remaining_account.2,
-      })
-    });
-    let mut data = InsertCollateralInfoInstructionData::new().try_to_vec().unwrap();
-          let mut args = self.__args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    let instruction = solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
-    };
-    let mut account_infos = Vec::with_capacity(4 + remaining_accounts.len());
-    account_infos.push(self.__program.clone());
-                  account_infos.push(self.admin_authority.clone());
-                        account_infos.push(self.global_config.clone());
-                        account_infos.push(self.token_infos.clone());
-              remaining_accounts.iter().for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
-
-    if signers_seeds.is_empty() {
-      solana_program::program::invoke(&instruction, &account_infos)
-    } else {
-      solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+    pub fn new(
+        program: &'b solana_program::account_info::AccountInfo<'a>,
+        accounts: InsertCollateralInfoCpiAccounts<'a, 'b>,
+        args: InsertCollateralInfoInstructionArgs,
+    ) -> Self {
+        Self {
+            __program: program,
+            admin_authority: accounts.admin_authority,
+            global_config: accounts.global_config,
+            token_infos: accounts.token_infos,
+            __args: args,
+        }
     }
-  }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], &[])
+    }
+    #[inline(always)]
+    pub fn invoke_with_remaining_accounts(
+        &self,
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
+    }
+    #[inline(always)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed_with_remaining_accounts(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let mut accounts = Vec::with_capacity(3 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.admin_authority.key,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.global_config.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.token_infos.key,
+            false,
+        ));
+        remaining_accounts.iter().for_each(|remaining_account| {
+            accounts.push(solana_program::instruction::AccountMeta {
+                pubkey: *remaining_account.0.key,
+                is_signer: remaining_account.1,
+                is_writable: remaining_account.2,
+            })
+        });
+        let mut data = InsertCollateralInfoInstructionData::new()
+            .try_to_vec()
+            .unwrap();
+        let mut args = self.__args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        let instruction = solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        };
+        let mut account_infos = Vec::with_capacity(4 + remaining_accounts.len());
+        account_infos.push(self.__program.clone());
+        account_infos.push(self.admin_authority.clone());
+        account_infos.push(self.global_config.clone());
+        account_infos.push(self.token_infos.clone());
+        remaining_accounts
+            .iter()
+            .for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
+
+        if signers_seeds.is_empty() {
+            solana_program::program::invoke(&instruction, &account_infos)
+        } else {
+            solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+        }
+    }
 }
 
 /// Instruction builder for `InsertCollateralInfo` via CPI.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-          ///   1. `[]` global_config
-                ///   2. `[writable]` token_infos
+///   0. `[writable, signer]` admin_authority
+///   1. `[]` global_config
+///   2. `[writable]` token_infos
 #[derive(Clone, Debug)]
 pub struct InsertCollateralInfoCpiBuilder<'a, 'b> {
-  instruction: Box<InsertCollateralInfoCpiBuilderInstruction<'a, 'b>>,
+    instruction: Box<InsertCollateralInfoCpiBuilderInstruction<'a, 'b>>,
 }
 
 impl<'a, 'b> InsertCollateralInfoCpiBuilder<'a, 'b> {
-  pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
-    let instruction = Box::new(InsertCollateralInfoCpiBuilderInstruction {
-      __program: program,
-              admin_authority: None,
-              global_config: None,
-              token_infos: None,
-                                            index: None,
-                                mint: None,
-                                lower_heuristic: None,
-                                upper_heuristic: None,
-                                exp_heuristic: None,
-                                max_twap_divergence_bps: None,
-                                scope_twap_price_chain: None,
-                                scope_price_chain: None,
-                                name: None,
-                                max_age_price_seconds: None,
-                                max_age_twap_seconds: None,
-                                max_ignorable_amount_as_reward: None,
-                                disabled: None,
-                                scope_staking_rate_chain: None,
-                    __remaining_accounts: Vec::new(),
-    });
-    Self { instruction }
-  }
-      #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.admin_authority = Some(admin_authority);
-                    self
+    pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
+        let instruction = Box::new(InsertCollateralInfoCpiBuilderInstruction {
+            __program: program,
+            admin_authority: None,
+            global_config: None,
+            token_infos: None,
+            index: None,
+            mint: None,
+            lower_heuristic: None,
+            upper_heuristic: None,
+            exp_heuristic: None,
+            max_twap_divergence_bps: None,
+            scope_twap_price_chain: None,
+            scope_price_chain: None,
+            name: None,
+            max_age_price_seconds: None,
+            max_age_twap_seconds: None,
+            max_ignorable_amount_as_reward: None,
+            disabled: None,
+            scope_staking_rate_chain: None,
+            __remaining_accounts: Vec::new(),
+        });
+        Self { instruction }
     }
-      #[inline(always)]
-    pub fn global_config(&mut self, global_config: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.global_config = Some(global_config);
-                    self
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.admin_authority = Some(admin_authority);
+        self
     }
-      #[inline(always)]
-    pub fn token_infos(&mut self, token_infos: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_infos = Some(token_infos);
-                    self
+    #[inline(always)]
+    pub fn global_config(
+        &mut self,
+        global_config: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.global_config = Some(global_config);
+        self
     }
-                    #[inline(always)]
-      pub fn index(&mut self, index: u64) -> &mut Self {
+    #[inline(always)]
+    pub fn token_infos(
+        &mut self,
+        token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_infos = Some(token_infos);
+        self
+    }
+    #[inline(always)]
+    pub fn index(&mut self, index: u64) -> &mut Self {
         self.instruction.index = Some(index);
         self
-      }
-                #[inline(always)]
-      pub fn mint(&mut self, mint: Pubkey) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn mint(&mut self, mint: Pubkey) -> &mut Self {
         self.instruction.mint = Some(mint);
         self
-      }
-                #[inline(always)]
-      pub fn lower_heuristic(&mut self, lower_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn lower_heuristic(&mut self, lower_heuristic: u64) -> &mut Self {
         self.instruction.lower_heuristic = Some(lower_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn upper_heuristic(&mut self, upper_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn upper_heuristic(&mut self, upper_heuristic: u64) -> &mut Self {
         self.instruction.upper_heuristic = Some(upper_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn exp_heuristic(&mut self, exp_heuristic: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn exp_heuristic(&mut self, exp_heuristic: u64) -> &mut Self {
         self.instruction.exp_heuristic = Some(exp_heuristic);
         self
-      }
-                #[inline(always)]
-      pub fn max_twap_divergence_bps(&mut self, max_twap_divergence_bps: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_twap_divergence_bps(&mut self, max_twap_divergence_bps: u64) -> &mut Self {
         self.instruction.max_twap_divergence_bps = Some(max_twap_divergence_bps);
         self
-      }
-                #[inline(always)]
-      pub fn scope_twap_price_chain(&mut self, scope_twap_price_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_twap_price_chain(&mut self, scope_twap_price_chain: [u16; 4]) -> &mut Self {
         self.instruction.scope_twap_price_chain = Some(scope_twap_price_chain);
         self
-      }
-                #[inline(always)]
-      pub fn scope_price_chain(&mut self, scope_price_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_price_chain(&mut self, scope_price_chain: [u16; 4]) -> &mut Self {
         self.instruction.scope_price_chain = Some(scope_price_chain);
         self
-      }
-                #[inline(always)]
-      pub fn name(&mut self, name: [u8; 32]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn name(&mut self, name: [u8; 32]) -> &mut Self {
         self.instruction.name = Some(name);
         self
-      }
-                #[inline(always)]
-      pub fn max_age_price_seconds(&mut self, max_age_price_seconds: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_age_price_seconds(&mut self, max_age_price_seconds: u64) -> &mut Self {
         self.instruction.max_age_price_seconds = Some(max_age_price_seconds);
         self
-      }
-                #[inline(always)]
-      pub fn max_age_twap_seconds(&mut self, max_age_twap_seconds: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_age_twap_seconds(&mut self, max_age_twap_seconds: u64) -> &mut Self {
         self.instruction.max_age_twap_seconds = Some(max_age_twap_seconds);
         self
-      }
-                #[inline(always)]
-      pub fn max_ignorable_amount_as_reward(&mut self, max_ignorable_amount_as_reward: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn max_ignorable_amount_as_reward(
+        &mut self,
+        max_ignorable_amount_as_reward: u64,
+    ) -> &mut Self {
         self.instruction.max_ignorable_amount_as_reward = Some(max_ignorable_amount_as_reward);
         self
-      }
-                #[inline(always)]
-      pub fn disabled(&mut self, disabled: u8) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn disabled(&mut self, disabled: u8) -> &mut Self {
         self.instruction.disabled = Some(disabled);
         self
-      }
-                #[inline(always)]
-      pub fn scope_staking_rate_chain(&mut self, scope_staking_rate_chain: [u16; 4]) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn scope_staking_rate_chain(&mut self, scope_staking_rate_chain: [u16; 4]) -> &mut Self {
         self.instruction.scope_staking_rate_chain = Some(scope_staking_rate_chain);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: &'b solana_program::account_info::AccountInfo<'a>, is_writable: bool, is_signer: bool) -> &mut Self {
-    self.instruction.__remaining_accounts.push((account, is_writable, is_signer));
-    self
-  }
-  /// Add additional accounts to the instruction.
-  ///
-  /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
-  /// and a `bool` indicating whether the account is a signer or not.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> &mut Self {
-    self.instruction.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed(&[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-          let args = InsertCollateralInfoInstructionArgs {
-                                                              index: self.instruction.index.clone().expect("index is not set"),
-                                                                  mint: self.instruction.mint.clone().expect("mint is not set"),
-                                                                  lower_heuristic: self.instruction.lower_heuristic.clone().expect("lower_heuristic is not set"),
-                                                                  upper_heuristic: self.instruction.upper_heuristic.clone().expect("upper_heuristic is not set"),
-                                                                  exp_heuristic: self.instruction.exp_heuristic.clone().expect("exp_heuristic is not set"),
-                                                                  max_twap_divergence_bps: self.instruction.max_twap_divergence_bps.clone().expect("max_twap_divergence_bps is not set"),
-                                                                  scope_twap_price_chain: self.instruction.scope_twap_price_chain.clone().expect("scope_twap_price_chain is not set"),
-                                                                  scope_price_chain: self.instruction.scope_price_chain.clone().expect("scope_price_chain is not set"),
-                                                                  name: self.instruction.name.clone().expect("name is not set"),
-                                                                  max_age_price_seconds: self.instruction.max_age_price_seconds.clone().expect("max_age_price_seconds is not set"),
-                                                                  max_age_twap_seconds: self.instruction.max_age_twap_seconds.clone().expect("max_age_twap_seconds is not set"),
-                                                                  max_ignorable_amount_as_reward: self.instruction.max_ignorable_amount_as_reward.clone().expect("max_ignorable_amount_as_reward is not set"),
-                                                                  disabled: self.instruction.disabled.clone().expect("disabled is not set"),
-                                                                  scope_staking_rate_chain: self.instruction.scope_staking_rate_chain.clone().expect("scope_staking_rate_chain is not set"),
-                                    };
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: &'b solana_program::account_info::AccountInfo<'a>,
+        is_writable: bool,
+        is_signer: bool,
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .push((account, is_writable, is_signer));
+        self
+    }
+    /// Add additional accounts to the instruction.
+    ///
+    /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
+    /// and a `bool` indicating whether the account is a signer or not.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .extend_from_slice(accounts);
+        self
+    }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed(&[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let args = InsertCollateralInfoInstructionArgs {
+            index: self.instruction.index.clone().expect("index is not set"),
+            mint: self.instruction.mint.clone().expect("mint is not set"),
+            lower_heuristic: self
+                .instruction
+                .lower_heuristic
+                .clone()
+                .expect("lower_heuristic is not set"),
+            upper_heuristic: self
+                .instruction
+                .upper_heuristic
+                .clone()
+                .expect("upper_heuristic is not set"),
+            exp_heuristic: self
+                .instruction
+                .exp_heuristic
+                .clone()
+                .expect("exp_heuristic is not set"),
+            max_twap_divergence_bps: self
+                .instruction
+                .max_twap_divergence_bps
+                .clone()
+                .expect("max_twap_divergence_bps is not set"),
+            scope_twap_price_chain: self
+                .instruction
+                .scope_twap_price_chain
+                .clone()
+                .expect("scope_twap_price_chain is not set"),
+            scope_price_chain: self
+                .instruction
+                .scope_price_chain
+                .clone()
+                .expect("scope_price_chain is not set"),
+            name: self.instruction.name.clone().expect("name is not set"),
+            max_age_price_seconds: self
+                .instruction
+                .max_age_price_seconds
+                .clone()
+                .expect("max_age_price_seconds is not set"),
+            max_age_twap_seconds: self
+                .instruction
+                .max_age_twap_seconds
+                .clone()
+                .expect("max_age_twap_seconds is not set"),
+            max_ignorable_amount_as_reward: self
+                .instruction
+                .max_ignorable_amount_as_reward
+                .clone()
+                .expect("max_ignorable_amount_as_reward is not set"),
+            disabled: self
+                .instruction
+                .disabled
+                .clone()
+                .expect("disabled is not set"),
+            scope_staking_rate_chain: self
+                .instruction
+                .scope_staking_rate_chain
+                .clone()
+                .expect("scope_staking_rate_chain is not set"),
+        };
         let instruction = InsertCollateralInfoCpi {
-        __program: self.instruction.__program,
-                  
-          admin_authority: self.instruction.admin_authority.expect("admin_authority is not set"),
-                  
-          global_config: self.instruction.global_config.expect("global_config is not set"),
-                  
-          token_infos: self.instruction.token_infos.expect("token_infos is not set"),
-                          __args: args,
-            };
-    instruction.invoke_signed_with_remaining_accounts(signers_seeds, &self.instruction.__remaining_accounts)
-  }
+            __program: self.instruction.__program,
+
+            admin_authority: self
+                .instruction
+                .admin_authority
+                .expect("admin_authority is not set"),
+
+            global_config: self
+                .instruction
+                .global_config
+                .expect("global_config is not set"),
+
+            token_infos: self
+                .instruction
+                .token_infos
+                .expect("token_infos is not set"),
+            __args: args,
+        };
+        instruction.invoke_signed_with_remaining_accounts(
+            signers_seeds,
+            &self.instruction.__remaining_accounts,
+        )
+    }
 }
 
 #[derive(Clone, Debug)]
 struct InsertCollateralInfoCpiBuilderInstruction<'a, 'b> {
-  __program: &'b solana_program::account_info::AccountInfo<'a>,
-            admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                        index: Option<u64>,
-                mint: Option<Pubkey>,
-                lower_heuristic: Option<u64>,
-                upper_heuristic: Option<u64>,
-                exp_heuristic: Option<u64>,
-                max_twap_divergence_bps: Option<u64>,
-                scope_twap_price_chain: Option<[u16; 4]>,
-                scope_price_chain: Option<[u16; 4]>,
-                name: Option<[u8; 32]>,
-                max_age_price_seconds: Option<u64>,
-                max_age_twap_seconds: Option<u64>,
-                max_ignorable_amount_as_reward: Option<u64>,
-                disabled: Option<u8>,
-                scope_staking_rate_chain: Option<[u16; 4]>,
-        /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
-  __remaining_accounts: Vec<(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)>,
+    __program: &'b solana_program::account_info::AccountInfo<'a>,
+    admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    index: Option<u64>,
+    mint: Option<Pubkey>,
+    lower_heuristic: Option<u64>,
+    upper_heuristic: Option<u64>,
+    exp_heuristic: Option<u64>,
+    max_twap_divergence_bps: Option<u64>,
+    scope_twap_price_chain: Option<[u16; 4]>,
+    scope_price_chain: Option<[u16; 4]>,
+    name: Option<[u8; 32]>,
+    max_age_price_seconds: Option<u64>,
+    max_age_twap_seconds: Option<u64>,
+    max_ignorable_amount_as_reward: Option<u64>,
+    disabled: Option<u8>,
+    scope_staking_rate_chain: Option<[u16; 4]>,
+    /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
+    __remaining_accounts: Vec<(
+        &'b solana_program::account_info::AccountInfo<'a>,
+        bool,
+        bool,
+    )>,
 }
-

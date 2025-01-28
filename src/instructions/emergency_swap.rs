@@ -5,1089 +5,1207 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 /// Accounts.
 pub struct EmergencySwap {
-      
-              
-          pub admin_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub strategy: solana_program::pubkey::Pubkey,
-          
-              
-          pub global_config: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_mint: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_mint: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_vault: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_vault: solana_program::pubkey::Pubkey,
-          
-              
-          pub base_vault_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool: solana_program::pubkey::Pubkey,
-          
-              
-          pub position: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_token_vault_a: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_token_vault_b: solana_program::pubkey::Pubkey,
-                /// Payer must send this correctly.
+    pub admin_authority: solana_program::pubkey::Pubkey,
 
-    
-              
-          pub tick_array0: solana_program::pubkey::Pubkey,
-                /// Payer must send this correctly.
+    pub strategy: solana_program::pubkey::Pubkey,
 
-    
-              
-          pub tick_array1: solana_program::pubkey::Pubkey,
-                /// Payer must send this correctly.
+    pub global_config: solana_program::pubkey::Pubkey,
 
-    
-              
-          pub tick_array2: solana_program::pubkey::Pubkey,
-          
-              
-          pub oracle: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub scope_prices: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_infos: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_token_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_token_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub memo_program: solana_program::pubkey::Pubkey,
-      }
+    pub token_a_mint: solana_program::pubkey::Pubkey,
+
+    pub token_b_mint: solana_program::pubkey::Pubkey,
+
+    pub token_a_vault: solana_program::pubkey::Pubkey,
+
+    pub token_b_vault: solana_program::pubkey::Pubkey,
+
+    pub base_vault_authority: solana_program::pubkey::Pubkey,
+
+    pub pool: solana_program::pubkey::Pubkey,
+
+    pub position: solana_program::pubkey::Pubkey,
+
+    pub pool_token_vault_a: solana_program::pubkey::Pubkey,
+
+    pub pool_token_vault_b: solana_program::pubkey::Pubkey,
+    /// Payer must send this correctly.
+    pub tick_array0: solana_program::pubkey::Pubkey,
+    /// Payer must send this correctly.
+    pub tick_array1: solana_program::pubkey::Pubkey,
+    /// Payer must send this correctly.
+    pub tick_array2: solana_program::pubkey::Pubkey,
+
+    pub oracle: solana_program::pubkey::Pubkey,
+
+    pub pool_program: solana_program::pubkey::Pubkey,
+
+    pub scope_prices: solana_program::pubkey::Pubkey,
+
+    pub token_infos: solana_program::pubkey::Pubkey,
+
+    pub token_a_token_program: solana_program::pubkey::Pubkey,
+
+    pub token_b_token_program: solana_program::pubkey::Pubkey,
+
+    pub memo_program: solana_program::pubkey::Pubkey,
+}
 
 impl EmergencySwap {
-  pub fn instruction(&self, args: EmergencySwapInstructionArgs) -> solana_program::instruction::Instruction {
-    self.instruction_with_remaining_accounts(args, &[])
-  }
-  #[allow(clippy::vec_init_then_push)]
-  pub fn instruction_with_remaining_accounts(&self, args: EmergencySwapInstructionArgs, remaining_accounts: &[solana_program::instruction::AccountMeta]) -> solana_program::instruction::Instruction {
-    let mut accounts = Vec::with_capacity(22+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            self.admin_authority,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.strategy,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.global_config,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.token_a_mint,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.token_b_mint,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.token_a_vault,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.token_b_vault,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.base_vault_authority,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.pool,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.position,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.pool_token_vault_a,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.pool_token_vault_b,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.tick_array0,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.tick_array1,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.tick_array2,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.oracle,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.pool_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.scope_prices,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.token_infos,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.token_a_token_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.token_b_token_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.memo_program,
-            false
-          ));
-                      accounts.extend_from_slice(remaining_accounts);
-    let mut data = EmergencySwapInstructionData::new().try_to_vec().unwrap();
-          let mut args = args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
+    pub fn instruction(
+        &self,
+        args: EmergencySwapInstructionArgs,
+    ) -> solana_program::instruction::Instruction {
+        self.instruction_with_remaining_accounts(args, &[])
     }
-  }
+    #[allow(clippy::vec_init_then_push)]
+    pub fn instruction_with_remaining_accounts(
+        &self,
+        args: EmergencySwapInstructionArgs,
+        remaining_accounts: &[solana_program::instruction::AccountMeta],
+    ) -> solana_program::instruction::Instruction {
+        let mut accounts = Vec::with_capacity(22 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.admin_authority,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.strategy,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.global_config,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.token_a_mint,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.token_b_mint,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.token_a_vault,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.token_b_vault,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.base_vault_authority,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.pool, false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.position,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.pool_token_vault_a,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.pool_token_vault_b,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.tick_array0,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.tick_array1,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.tick_array2,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.oracle,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.pool_program,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.scope_prices,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.token_infos,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.token_a_token_program,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.token_b_token_program,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.memo_program,
+            false,
+        ));
+        accounts.extend_from_slice(remaining_accounts);
+        let mut data = EmergencySwapInstructionData::new().try_to_vec().unwrap();
+        let mut args = args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        }
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct EmergencySwapInstructionData {
-            discriminator: [u8; 8],
-                  }
+pub struct EmergencySwapInstructionData {
+    discriminator: [u8; 8],
+}
 
 impl EmergencySwapInstructionData {
-  pub fn new() -> Self {
-    Self {
-                        discriminator: [73, 226, 248, 215, 5, 197, 211, 229],
-                                              }
-  }
+    pub fn new() -> Self {
+        Self {
+            discriminator: [73, 226, 248, 215, 5, 197, 211, 229],
+        }
+    }
 }
 
 impl Default for EmergencySwapInstructionData {
-  fn default() -> Self {
-    Self::new()
-  }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct EmergencySwapInstructionArgs {
-                  pub a_to_b: bool,
-                pub target_limit_bps: u64,
-      }
-
+pub struct EmergencySwapInstructionArgs {
+    pub a_to_b: bool,
+    pub target_limit_bps: u64,
+}
 
 /// Instruction builder for `EmergencySwap`.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-                ///   1. `[writable]` strategy
-          ///   2. `[]` global_config
-          ///   3. `[]` token_a_mint
-          ///   4. `[]` token_b_mint
-                ///   5. `[writable]` token_a_vault
-                ///   6. `[writable]` token_b_vault
-                ///   7. `[writable]` base_vault_authority
-                ///   8. `[writable]` pool
-                ///   9. `[writable]` position
-                ///   10. `[writable]` pool_token_vault_a
-                ///   11. `[writable]` pool_token_vault_b
-                ///   12. `[writable]` tick_array0
-                ///   13. `[writable]` tick_array1
-                ///   14. `[writable]` tick_array2
-                ///   15. `[writable]` oracle
-          ///   16. `[]` pool_program
-          ///   17. `[]` scope_prices
-          ///   18. `[]` token_infos
-          ///   19. `[]` token_a_token_program
-          ///   20. `[]` token_b_token_program
-          ///   21. `[]` memo_program
+///   0. `[writable, signer]` admin_authority
+///   1. `[writable]` strategy
+///   2. `[]` global_config
+///   3. `[]` token_a_mint
+///   4. `[]` token_b_mint
+///   5. `[writable]` token_a_vault
+///   6. `[writable]` token_b_vault
+///   7. `[writable]` base_vault_authority
+///   8. `[writable]` pool
+///   9. `[writable]` position
+///   10. `[writable]` pool_token_vault_a
+///   11. `[writable]` pool_token_vault_b
+///   12. `[writable]` tick_array0
+///   13. `[writable]` tick_array1
+///   14. `[writable]` tick_array2
+///   15. `[writable]` oracle
+///   16. `[]` pool_program
+///   17. `[]` scope_prices
+///   18. `[]` token_infos
+///   19. `[]` token_a_token_program
+///   20. `[]` token_b_token_program
+///   21. `[]` memo_program
 #[derive(Clone, Debug, Default)]
 pub struct EmergencySwapBuilder {
-            admin_authority: Option<solana_program::pubkey::Pubkey>,
-                strategy: Option<solana_program::pubkey::Pubkey>,
-                global_config: Option<solana_program::pubkey::Pubkey>,
-                token_a_mint: Option<solana_program::pubkey::Pubkey>,
-                token_b_mint: Option<solana_program::pubkey::Pubkey>,
-                token_a_vault: Option<solana_program::pubkey::Pubkey>,
-                token_b_vault: Option<solana_program::pubkey::Pubkey>,
-                base_vault_authority: Option<solana_program::pubkey::Pubkey>,
-                pool: Option<solana_program::pubkey::Pubkey>,
-                position: Option<solana_program::pubkey::Pubkey>,
-                pool_token_vault_a: Option<solana_program::pubkey::Pubkey>,
-                pool_token_vault_b: Option<solana_program::pubkey::Pubkey>,
-                tick_array0: Option<solana_program::pubkey::Pubkey>,
-                tick_array1: Option<solana_program::pubkey::Pubkey>,
-                tick_array2: Option<solana_program::pubkey::Pubkey>,
-                oracle: Option<solana_program::pubkey::Pubkey>,
-                pool_program: Option<solana_program::pubkey::Pubkey>,
-                scope_prices: Option<solana_program::pubkey::Pubkey>,
-                token_infos: Option<solana_program::pubkey::Pubkey>,
-                token_a_token_program: Option<solana_program::pubkey::Pubkey>,
-                token_b_token_program: Option<solana_program::pubkey::Pubkey>,
-                memo_program: Option<solana_program::pubkey::Pubkey>,
-                        a_to_b: Option<bool>,
-                target_limit_bps: Option<u64>,
-        __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
+    admin_authority: Option<solana_program::pubkey::Pubkey>,
+    strategy: Option<solana_program::pubkey::Pubkey>,
+    global_config: Option<solana_program::pubkey::Pubkey>,
+    token_a_mint: Option<solana_program::pubkey::Pubkey>,
+    token_b_mint: Option<solana_program::pubkey::Pubkey>,
+    token_a_vault: Option<solana_program::pubkey::Pubkey>,
+    token_b_vault: Option<solana_program::pubkey::Pubkey>,
+    base_vault_authority: Option<solana_program::pubkey::Pubkey>,
+    pool: Option<solana_program::pubkey::Pubkey>,
+    position: Option<solana_program::pubkey::Pubkey>,
+    pool_token_vault_a: Option<solana_program::pubkey::Pubkey>,
+    pool_token_vault_b: Option<solana_program::pubkey::Pubkey>,
+    tick_array0: Option<solana_program::pubkey::Pubkey>,
+    tick_array1: Option<solana_program::pubkey::Pubkey>,
+    tick_array2: Option<solana_program::pubkey::Pubkey>,
+    oracle: Option<solana_program::pubkey::Pubkey>,
+    pool_program: Option<solana_program::pubkey::Pubkey>,
+    scope_prices: Option<solana_program::pubkey::Pubkey>,
+    token_infos: Option<solana_program::pubkey::Pubkey>,
+    token_a_token_program: Option<solana_program::pubkey::Pubkey>,
+    token_b_token_program: Option<solana_program::pubkey::Pubkey>,
+    memo_program: Option<solana_program::pubkey::Pubkey>,
+    a_to_b: Option<bool>,
+    target_limit_bps: Option<u64>,
+    __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
 }
 
 impl EmergencySwapBuilder {
-  pub fn new() -> Self {
-    Self::default()
-  }
-            #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.admin_authority = Some(admin_authority);
-                    self
+    pub fn new() -> Self {
+        Self::default()
     }
-            #[inline(always)]
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.admin_authority = Some(admin_authority);
+        self
+    }
+    #[inline(always)]
     pub fn strategy(&mut self, strategy: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.strategy = Some(strategy);
-                    self
+        self.strategy = Some(strategy);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn global_config(&mut self, global_config: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.global_config = Some(global_config);
-                    self
+        self.global_config = Some(global_config);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_a_mint(&mut self, token_a_mint: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_mint = Some(token_a_mint);
-                    self
+        self.token_a_mint = Some(token_a_mint);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_b_mint(&mut self, token_b_mint: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_mint = Some(token_b_mint);
-                    self
+        self.token_b_mint = Some(token_b_mint);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_a_vault(&mut self, token_a_vault: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_vault = Some(token_a_vault);
-                    self
+        self.token_a_vault = Some(token_a_vault);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_b_vault(&mut self, token_b_vault: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_vault = Some(token_b_vault);
-                    self
+        self.token_b_vault = Some(token_b_vault);
+        self
     }
-            #[inline(always)]
-    pub fn base_vault_authority(&mut self, base_vault_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.base_vault_authority = Some(base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn base_vault_authority(
+        &mut self,
+        base_vault_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.base_vault_authority = Some(base_vault_authority);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn pool(&mut self, pool: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool = Some(pool);
-                    self
+        self.pool = Some(pool);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn position(&mut self, position: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.position = Some(position);
-                    self
+        self.position = Some(position);
+        self
     }
-            #[inline(always)]
-    pub fn pool_token_vault_a(&mut self, pool_token_vault_a: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_token_vault_a = Some(pool_token_vault_a);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_a(
+        &mut self,
+        pool_token_vault_a: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.pool_token_vault_a = Some(pool_token_vault_a);
+        self
     }
-            #[inline(always)]
-    pub fn pool_token_vault_b(&mut self, pool_token_vault_b: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_token_vault_b = Some(pool_token_vault_b);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_b(
+        &mut self,
+        pool_token_vault_b: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.pool_token_vault_b = Some(pool_token_vault_b);
+        self
     }
-            /// Payer must send this correctly.
-#[inline(always)]
+    /// Payer must send this correctly.
+    #[inline(always)]
     pub fn tick_array0(&mut self, tick_array0: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.tick_array0 = Some(tick_array0);
-                    self
+        self.tick_array0 = Some(tick_array0);
+        self
     }
-            /// Payer must send this correctly.
-#[inline(always)]
+    /// Payer must send this correctly.
+    #[inline(always)]
     pub fn tick_array1(&mut self, tick_array1: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.tick_array1 = Some(tick_array1);
-                    self
+        self.tick_array1 = Some(tick_array1);
+        self
     }
-            /// Payer must send this correctly.
-#[inline(always)]
+    /// Payer must send this correctly.
+    #[inline(always)]
     pub fn tick_array2(&mut self, tick_array2: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.tick_array2 = Some(tick_array2);
-                    self
+        self.tick_array2 = Some(tick_array2);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn oracle(&mut self, oracle: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.oracle = Some(oracle);
-                    self
+        self.oracle = Some(oracle);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn pool_program(&mut self, pool_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_program = Some(pool_program);
-                    self
+        self.pool_program = Some(pool_program);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn scope_prices(&mut self, scope_prices: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.scope_prices = Some(scope_prices);
-                    self
+        self.scope_prices = Some(scope_prices);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_infos(&mut self, token_infos: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_infos = Some(token_infos);
-                    self
+        self.token_infos = Some(token_infos);
+        self
     }
-            #[inline(always)]
-    pub fn token_a_token_program(&mut self, token_a_token_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_token_program = Some(token_a_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_a_token_program(
+        &mut self,
+        token_a_token_program: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.token_a_token_program = Some(token_a_token_program);
+        self
     }
-            #[inline(always)]
-    pub fn token_b_token_program(&mut self, token_b_token_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_token_program = Some(token_b_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_b_token_program(
+        &mut self,
+        token_b_token_program: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.token_b_token_program = Some(token_b_token_program);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn memo_program(&mut self, memo_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.memo_program = Some(memo_program);
-                    self
+        self.memo_program = Some(memo_program);
+        self
     }
-                    #[inline(always)]
-      pub fn a_to_b(&mut self, a_to_b: bool) -> &mut Self {
+    #[inline(always)]
+    pub fn a_to_b(&mut self, a_to_b: bool) -> &mut Self {
         self.a_to_b = Some(a_to_b);
         self
-      }
-                #[inline(always)]
-      pub fn target_limit_bps(&mut self, target_limit_bps: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn target_limit_bps(&mut self, target_limit_bps: u64) -> &mut Self {
         self.target_limit_bps = Some(target_limit_bps);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: solana_program::instruction::AccountMeta) -> &mut Self {
-    self.__remaining_accounts.push(account);
-    self
-  }
-  /// Add additional accounts to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[solana_program::instruction::AccountMeta]) -> &mut Self {
-    self.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[allow(clippy::clone_on_copy)]
-  pub fn instruction(&self) -> solana_program::instruction::Instruction {
-    let accounts = EmergencySwap {
-                              admin_authority: self.admin_authority.expect("admin_authority is not set"),
-                                        strategy: self.strategy.expect("strategy is not set"),
-                                        global_config: self.global_config.expect("global_config is not set"),
-                                        token_a_mint: self.token_a_mint.expect("token_a_mint is not set"),
-                                        token_b_mint: self.token_b_mint.expect("token_b_mint is not set"),
-                                        token_a_vault: self.token_a_vault.expect("token_a_vault is not set"),
-                                        token_b_vault: self.token_b_vault.expect("token_b_vault is not set"),
-                                        base_vault_authority: self.base_vault_authority.expect("base_vault_authority is not set"),
-                                        pool: self.pool.expect("pool is not set"),
-                                        position: self.position.expect("position is not set"),
-                                        pool_token_vault_a: self.pool_token_vault_a.expect("pool_token_vault_a is not set"),
-                                        pool_token_vault_b: self.pool_token_vault_b.expect("pool_token_vault_b is not set"),
-                                        tick_array0: self.tick_array0.expect("tick_array0 is not set"),
-                                        tick_array1: self.tick_array1.expect("tick_array1 is not set"),
-                                        tick_array2: self.tick_array2.expect("tick_array2 is not set"),
-                                        oracle: self.oracle.expect("oracle is not set"),
-                                        pool_program: self.pool_program.expect("pool_program is not set"),
-                                        scope_prices: self.scope_prices.expect("scope_prices is not set"),
-                                        token_infos: self.token_infos.expect("token_infos is not set"),
-                                        token_a_token_program: self.token_a_token_program.expect("token_a_token_program is not set"),
-                                        token_b_token_program: self.token_b_token_program.expect("token_b_token_program is not set"),
-                                        memo_program: self.memo_program.expect("memo_program is not set"),
-                      };
-          let args = EmergencySwapInstructionArgs {
-                                                              a_to_b: self.a_to_b.clone().expect("a_to_b is not set"),
-                                                                  target_limit_bps: self.target_limit_bps.clone().expect("target_limit_bps is not set"),
-                                    };
-    
-    accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
-  }
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: solana_program::instruction::AccountMeta,
+    ) -> &mut Self {
+        self.__remaining_accounts.push(account);
+        self
+    }
+    /// Add additional accounts to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[solana_program::instruction::AccountMeta],
+    ) -> &mut Self {
+        self.__remaining_accounts.extend_from_slice(accounts);
+        self
+    }
+    #[allow(clippy::clone_on_copy)]
+    pub fn instruction(&self) -> solana_program::instruction::Instruction {
+        let accounts = EmergencySwap {
+            admin_authority: self.admin_authority.expect("admin_authority is not set"),
+            strategy: self.strategy.expect("strategy is not set"),
+            global_config: self.global_config.expect("global_config is not set"),
+            token_a_mint: self.token_a_mint.expect("token_a_mint is not set"),
+            token_b_mint: self.token_b_mint.expect("token_b_mint is not set"),
+            token_a_vault: self.token_a_vault.expect("token_a_vault is not set"),
+            token_b_vault: self.token_b_vault.expect("token_b_vault is not set"),
+            base_vault_authority: self
+                .base_vault_authority
+                .expect("base_vault_authority is not set"),
+            pool: self.pool.expect("pool is not set"),
+            position: self.position.expect("position is not set"),
+            pool_token_vault_a: self
+                .pool_token_vault_a
+                .expect("pool_token_vault_a is not set"),
+            pool_token_vault_b: self
+                .pool_token_vault_b
+                .expect("pool_token_vault_b is not set"),
+            tick_array0: self.tick_array0.expect("tick_array0 is not set"),
+            tick_array1: self.tick_array1.expect("tick_array1 is not set"),
+            tick_array2: self.tick_array2.expect("tick_array2 is not set"),
+            oracle: self.oracle.expect("oracle is not set"),
+            pool_program: self.pool_program.expect("pool_program is not set"),
+            scope_prices: self.scope_prices.expect("scope_prices is not set"),
+            token_infos: self.token_infos.expect("token_infos is not set"),
+            token_a_token_program: self
+                .token_a_token_program
+                .expect("token_a_token_program is not set"),
+            token_b_token_program: self
+                .token_b_token_program
+                .expect("token_b_token_program is not set"),
+            memo_program: self.memo_program.expect("memo_program is not set"),
+        };
+        let args = EmergencySwapInstructionArgs {
+            a_to_b: self.a_to_b.clone().expect("a_to_b is not set"),
+            target_limit_bps: self
+                .target_limit_bps
+                .clone()
+                .expect("target_limit_bps is not set"),
+        };
+
+        accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
+    }
 }
 
-  /// `emergency_swap` CPI accounts.
-  pub struct EmergencySwapCpiAccounts<'a, 'b> {
-          
-                    
-              pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub position: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
-                        /// Payer must send this correctly.
+/// `emergency_swap` CPI accounts.
+pub struct EmergencySwapCpiAccounts<'a, 'b> {
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
 
-      
-                    
-              pub tick_array0: &'b solana_program::account_info::AccountInfo<'a>,
-                        /// Payer must send this correctly.
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
 
-      
-                    
-              pub tick_array1: &'b solana_program::account_info::AccountInfo<'a>,
-                        /// Payer must send this correctly.
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
 
-      
-                    
-              pub tick_array2: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub oracle: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
-            }
+    pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array0: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array1: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array2: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub oracle: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+}
 
 /// `emergency_swap` CPI instruction.
 pub struct EmergencySwapCpi<'a, 'b> {
-  /// The program to invoke.
-  pub __program: &'b solana_program::account_info::AccountInfo<'a>,
-      
-              
-          pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub position: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
-                /// Payer must send this correctly.
+    /// The program to invoke.
+    pub __program: &'b solana_program::account_info::AccountInfo<'a>,
 
-    
-              
-          pub tick_array0: &'b solana_program::account_info::AccountInfo<'a>,
-                /// Payer must send this correctly.
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
 
-    
-              
-          pub tick_array1: &'b solana_program::account_info::AccountInfo<'a>,
-                /// Payer must send this correctly.
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
 
-    
-              
-          pub tick_array2: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub oracle: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
-            /// The arguments for the instruction.
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array0: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array1: &'b solana_program::account_info::AccountInfo<'a>,
+    /// Payer must send this correctly.
+    pub tick_array2: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub oracle: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+    /// The arguments for the instruction.
     pub __args: EmergencySwapInstructionArgs,
-  }
+}
 
 impl<'a, 'b> EmergencySwapCpi<'a, 'b> {
-  pub fn new(
-    program: &'b solana_program::account_info::AccountInfo<'a>,
-          accounts: EmergencySwapCpiAccounts<'a, 'b>,
-              args: EmergencySwapInstructionArgs,
-      ) -> Self {
-    Self {
-      __program: program,
-              admin_authority: accounts.admin_authority,
-              strategy: accounts.strategy,
-              global_config: accounts.global_config,
-              token_a_mint: accounts.token_a_mint,
-              token_b_mint: accounts.token_b_mint,
-              token_a_vault: accounts.token_a_vault,
-              token_b_vault: accounts.token_b_vault,
-              base_vault_authority: accounts.base_vault_authority,
-              pool: accounts.pool,
-              position: accounts.position,
-              pool_token_vault_a: accounts.pool_token_vault_a,
-              pool_token_vault_b: accounts.pool_token_vault_b,
-              tick_array0: accounts.tick_array0,
-              tick_array1: accounts.tick_array1,
-              tick_array2: accounts.tick_array2,
-              oracle: accounts.oracle,
-              pool_program: accounts.pool_program,
-              scope_prices: accounts.scope_prices,
-              token_infos: accounts.token_infos,
-              token_a_token_program: accounts.token_a_token_program,
-              token_b_token_program: accounts.token_b_token_program,
-              memo_program: accounts.memo_program,
-                    __args: args,
-          }
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], &[])
-  }
-  #[inline(always)]
-  pub fn invoke_with_remaining_accounts(&self, remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
-  }
-  #[inline(always)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed_with_remaining_accounts(
-    &self,
-    signers_seeds: &[&[&[u8]]],
-    remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]
-  ) -> solana_program::entrypoint::ProgramResult {
-    let mut accounts = Vec::with_capacity(22+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.admin_authority.key,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.strategy.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.global_config.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_a_mint.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_b_mint.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.token_a_vault.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.token_b_vault.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.base_vault_authority.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.position.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool_token_vault_a.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool_token_vault_b.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.tick_array0.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.tick_array1.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.tick_array2.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.oracle.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.pool_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.scope_prices.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_infos.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_a_token_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_b_token_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.memo_program.key,
-            false
-          ));
-                      remaining_accounts.iter().for_each(|remaining_account| {
-      accounts.push(solana_program::instruction::AccountMeta {
-          pubkey: *remaining_account.0.key,
-          is_signer: remaining_account.1,
-          is_writable: remaining_account.2,
-      })
-    });
-    let mut data = EmergencySwapInstructionData::new().try_to_vec().unwrap();
-          let mut args = self.__args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    let instruction = solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
-    };
-    let mut account_infos = Vec::with_capacity(23 + remaining_accounts.len());
-    account_infos.push(self.__program.clone());
-                  account_infos.push(self.admin_authority.clone());
-                        account_infos.push(self.strategy.clone());
-                        account_infos.push(self.global_config.clone());
-                        account_infos.push(self.token_a_mint.clone());
-                        account_infos.push(self.token_b_mint.clone());
-                        account_infos.push(self.token_a_vault.clone());
-                        account_infos.push(self.token_b_vault.clone());
-                        account_infos.push(self.base_vault_authority.clone());
-                        account_infos.push(self.pool.clone());
-                        account_infos.push(self.position.clone());
-                        account_infos.push(self.pool_token_vault_a.clone());
-                        account_infos.push(self.pool_token_vault_b.clone());
-                        account_infos.push(self.tick_array0.clone());
-                        account_infos.push(self.tick_array1.clone());
-                        account_infos.push(self.tick_array2.clone());
-                        account_infos.push(self.oracle.clone());
-                        account_infos.push(self.pool_program.clone());
-                        account_infos.push(self.scope_prices.clone());
-                        account_infos.push(self.token_infos.clone());
-                        account_infos.push(self.token_a_token_program.clone());
-                        account_infos.push(self.token_b_token_program.clone());
-                        account_infos.push(self.memo_program.clone());
-              remaining_accounts.iter().for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
-
-    if signers_seeds.is_empty() {
-      solana_program::program::invoke(&instruction, &account_infos)
-    } else {
-      solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+    pub fn new(
+        program: &'b solana_program::account_info::AccountInfo<'a>,
+        accounts: EmergencySwapCpiAccounts<'a, 'b>,
+        args: EmergencySwapInstructionArgs,
+    ) -> Self {
+        Self {
+            __program: program,
+            admin_authority: accounts.admin_authority,
+            strategy: accounts.strategy,
+            global_config: accounts.global_config,
+            token_a_mint: accounts.token_a_mint,
+            token_b_mint: accounts.token_b_mint,
+            token_a_vault: accounts.token_a_vault,
+            token_b_vault: accounts.token_b_vault,
+            base_vault_authority: accounts.base_vault_authority,
+            pool: accounts.pool,
+            position: accounts.position,
+            pool_token_vault_a: accounts.pool_token_vault_a,
+            pool_token_vault_b: accounts.pool_token_vault_b,
+            tick_array0: accounts.tick_array0,
+            tick_array1: accounts.tick_array1,
+            tick_array2: accounts.tick_array2,
+            oracle: accounts.oracle,
+            pool_program: accounts.pool_program,
+            scope_prices: accounts.scope_prices,
+            token_infos: accounts.token_infos,
+            token_a_token_program: accounts.token_a_token_program,
+            token_b_token_program: accounts.token_b_token_program,
+            memo_program: accounts.memo_program,
+            __args: args,
+        }
     }
-  }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], &[])
+    }
+    #[inline(always)]
+    pub fn invoke_with_remaining_accounts(
+        &self,
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
+    }
+    #[inline(always)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed_with_remaining_accounts(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let mut accounts = Vec::with_capacity(22 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.admin_authority.key,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.strategy.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.global_config.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_a_mint.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_b_mint.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.token_a_vault.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.token_b_vault.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.base_vault_authority.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.position.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool_token_vault_a.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool_token_vault_b.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.tick_array0.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.tick_array1.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.tick_array2.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.oracle.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.pool_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.scope_prices.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_infos.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_a_token_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_b_token_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.memo_program.key,
+            false,
+        ));
+        remaining_accounts.iter().for_each(|remaining_account| {
+            accounts.push(solana_program::instruction::AccountMeta {
+                pubkey: *remaining_account.0.key,
+                is_signer: remaining_account.1,
+                is_writable: remaining_account.2,
+            })
+        });
+        let mut data = EmergencySwapInstructionData::new().try_to_vec().unwrap();
+        let mut args = self.__args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        let instruction = solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        };
+        let mut account_infos = Vec::with_capacity(23 + remaining_accounts.len());
+        account_infos.push(self.__program.clone());
+        account_infos.push(self.admin_authority.clone());
+        account_infos.push(self.strategy.clone());
+        account_infos.push(self.global_config.clone());
+        account_infos.push(self.token_a_mint.clone());
+        account_infos.push(self.token_b_mint.clone());
+        account_infos.push(self.token_a_vault.clone());
+        account_infos.push(self.token_b_vault.clone());
+        account_infos.push(self.base_vault_authority.clone());
+        account_infos.push(self.pool.clone());
+        account_infos.push(self.position.clone());
+        account_infos.push(self.pool_token_vault_a.clone());
+        account_infos.push(self.pool_token_vault_b.clone());
+        account_infos.push(self.tick_array0.clone());
+        account_infos.push(self.tick_array1.clone());
+        account_infos.push(self.tick_array2.clone());
+        account_infos.push(self.oracle.clone());
+        account_infos.push(self.pool_program.clone());
+        account_infos.push(self.scope_prices.clone());
+        account_infos.push(self.token_infos.clone());
+        account_infos.push(self.token_a_token_program.clone());
+        account_infos.push(self.token_b_token_program.clone());
+        account_infos.push(self.memo_program.clone());
+        remaining_accounts
+            .iter()
+            .for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
+
+        if signers_seeds.is_empty() {
+            solana_program::program::invoke(&instruction, &account_infos)
+        } else {
+            solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+        }
+    }
 }
 
 /// Instruction builder for `EmergencySwap` via CPI.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-                ///   1. `[writable]` strategy
-          ///   2. `[]` global_config
-          ///   3. `[]` token_a_mint
-          ///   4. `[]` token_b_mint
-                ///   5. `[writable]` token_a_vault
-                ///   6. `[writable]` token_b_vault
-                ///   7. `[writable]` base_vault_authority
-                ///   8. `[writable]` pool
-                ///   9. `[writable]` position
-                ///   10. `[writable]` pool_token_vault_a
-                ///   11. `[writable]` pool_token_vault_b
-                ///   12. `[writable]` tick_array0
-                ///   13. `[writable]` tick_array1
-                ///   14. `[writable]` tick_array2
-                ///   15. `[writable]` oracle
-          ///   16. `[]` pool_program
-          ///   17. `[]` scope_prices
-          ///   18. `[]` token_infos
-          ///   19. `[]` token_a_token_program
-          ///   20. `[]` token_b_token_program
-          ///   21. `[]` memo_program
+///   0. `[writable, signer]` admin_authority
+///   1. `[writable]` strategy
+///   2. `[]` global_config
+///   3. `[]` token_a_mint
+///   4. `[]` token_b_mint
+///   5. `[writable]` token_a_vault
+///   6. `[writable]` token_b_vault
+///   7. `[writable]` base_vault_authority
+///   8. `[writable]` pool
+///   9. `[writable]` position
+///   10. `[writable]` pool_token_vault_a
+///   11. `[writable]` pool_token_vault_b
+///   12. `[writable]` tick_array0
+///   13. `[writable]` tick_array1
+///   14. `[writable]` tick_array2
+///   15. `[writable]` oracle
+///   16. `[]` pool_program
+///   17. `[]` scope_prices
+///   18. `[]` token_infos
+///   19. `[]` token_a_token_program
+///   20. `[]` token_b_token_program
+///   21. `[]` memo_program
 #[derive(Clone, Debug)]
 pub struct EmergencySwapCpiBuilder<'a, 'b> {
-  instruction: Box<EmergencySwapCpiBuilderInstruction<'a, 'b>>,
+    instruction: Box<EmergencySwapCpiBuilderInstruction<'a, 'b>>,
 }
 
 impl<'a, 'b> EmergencySwapCpiBuilder<'a, 'b> {
-  pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
-    let instruction = Box::new(EmergencySwapCpiBuilderInstruction {
-      __program: program,
-              admin_authority: None,
-              strategy: None,
-              global_config: None,
-              token_a_mint: None,
-              token_b_mint: None,
-              token_a_vault: None,
-              token_b_vault: None,
-              base_vault_authority: None,
-              pool: None,
-              position: None,
-              pool_token_vault_a: None,
-              pool_token_vault_b: None,
-              tick_array0: None,
-              tick_array1: None,
-              tick_array2: None,
-              oracle: None,
-              pool_program: None,
-              scope_prices: None,
-              token_infos: None,
-              token_a_token_program: None,
-              token_b_token_program: None,
-              memo_program: None,
-                                            a_to_b: None,
-                                target_limit_bps: None,
-                    __remaining_accounts: Vec::new(),
-    });
-    Self { instruction }
-  }
-      #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.admin_authority = Some(admin_authority);
-                    self
+    pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
+        let instruction = Box::new(EmergencySwapCpiBuilderInstruction {
+            __program: program,
+            admin_authority: None,
+            strategy: None,
+            global_config: None,
+            token_a_mint: None,
+            token_b_mint: None,
+            token_a_vault: None,
+            token_b_vault: None,
+            base_vault_authority: None,
+            pool: None,
+            position: None,
+            pool_token_vault_a: None,
+            pool_token_vault_b: None,
+            tick_array0: None,
+            tick_array1: None,
+            tick_array2: None,
+            oracle: None,
+            pool_program: None,
+            scope_prices: None,
+            token_infos: None,
+            token_a_token_program: None,
+            token_b_token_program: None,
+            memo_program: None,
+            a_to_b: None,
+            target_limit_bps: None,
+            __remaining_accounts: Vec::new(),
+        });
+        Self { instruction }
     }
-      #[inline(always)]
-    pub fn strategy(&mut self, strategy: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.strategy = Some(strategy);
-                    self
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.admin_authority = Some(admin_authority);
+        self
     }
-      #[inline(always)]
-    pub fn global_config(&mut self, global_config: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.global_config = Some(global_config);
-                    self
+    #[inline(always)]
+    pub fn strategy(
+        &mut self,
+        strategy: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.strategy = Some(strategy);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_mint(&mut self, token_a_mint: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_mint = Some(token_a_mint);
-                    self
+    #[inline(always)]
+    pub fn global_config(
+        &mut self,
+        global_config: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.global_config = Some(global_config);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_mint(&mut self, token_b_mint: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_mint = Some(token_b_mint);
-                    self
+    #[inline(always)]
+    pub fn token_a_mint(
+        &mut self,
+        token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_mint = Some(token_a_mint);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_vault(&mut self, token_a_vault: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_vault = Some(token_a_vault);
-                    self
+    #[inline(always)]
+    pub fn token_b_mint(
+        &mut self,
+        token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_mint = Some(token_b_mint);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_vault(&mut self, token_b_vault: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_vault = Some(token_b_vault);
-                    self
+    #[inline(always)]
+    pub fn token_a_vault(
+        &mut self,
+        token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_vault = Some(token_a_vault);
+        self
     }
-      #[inline(always)]
-    pub fn base_vault_authority(&mut self, base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.base_vault_authority = Some(base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn token_b_vault(
+        &mut self,
+        token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_vault = Some(token_b_vault);
+        self
     }
-      #[inline(always)]
+    #[inline(always)]
+    pub fn base_vault_authority(
+        &mut self,
+        base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.base_vault_authority = Some(base_vault_authority);
+        self
+    }
+    #[inline(always)]
     pub fn pool(&mut self, pool: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool = Some(pool);
-                    self
+        self.instruction.pool = Some(pool);
+        self
     }
-      #[inline(always)]
-    pub fn position(&mut self, position: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.position = Some(position);
-                    self
+    #[inline(always)]
+    pub fn position(
+        &mut self,
+        position: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.position = Some(position);
+        self
     }
-      #[inline(always)]
-    pub fn pool_token_vault_a(&mut self, pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_token_vault_a = Some(pool_token_vault_a);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_a(
+        &mut self,
+        pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_token_vault_a = Some(pool_token_vault_a);
+        self
     }
-      #[inline(always)]
-    pub fn pool_token_vault_b(&mut self, pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_token_vault_b = Some(pool_token_vault_b);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_b(
+        &mut self,
+        pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_token_vault_b = Some(pool_token_vault_b);
+        self
     }
-      /// Payer must send this correctly.
-#[inline(always)]
-    pub fn tick_array0(&mut self, tick_array0: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.tick_array0 = Some(tick_array0);
-                    self
+    /// Payer must send this correctly.
+    #[inline(always)]
+    pub fn tick_array0(
+        &mut self,
+        tick_array0: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.tick_array0 = Some(tick_array0);
+        self
     }
-      /// Payer must send this correctly.
-#[inline(always)]
-    pub fn tick_array1(&mut self, tick_array1: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.tick_array1 = Some(tick_array1);
-                    self
+    /// Payer must send this correctly.
+    #[inline(always)]
+    pub fn tick_array1(
+        &mut self,
+        tick_array1: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.tick_array1 = Some(tick_array1);
+        self
     }
-      /// Payer must send this correctly.
-#[inline(always)]
-    pub fn tick_array2(&mut self, tick_array2: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.tick_array2 = Some(tick_array2);
-                    self
+    /// Payer must send this correctly.
+    #[inline(always)]
+    pub fn tick_array2(
+        &mut self,
+        tick_array2: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.tick_array2 = Some(tick_array2);
+        self
     }
-      #[inline(always)]
-    pub fn oracle(&mut self, oracle: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.oracle = Some(oracle);
-                    self
+    #[inline(always)]
+    pub fn oracle(
+        &mut self,
+        oracle: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.oracle = Some(oracle);
+        self
     }
-      #[inline(always)]
-    pub fn pool_program(&mut self, pool_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_program = Some(pool_program);
-                    self
+    #[inline(always)]
+    pub fn pool_program(
+        &mut self,
+        pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_program = Some(pool_program);
+        self
     }
-      #[inline(always)]
-    pub fn scope_prices(&mut self, scope_prices: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.scope_prices = Some(scope_prices);
-                    self
+    #[inline(always)]
+    pub fn scope_prices(
+        &mut self,
+        scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.scope_prices = Some(scope_prices);
+        self
     }
-      #[inline(always)]
-    pub fn token_infos(&mut self, token_infos: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_infos = Some(token_infos);
-                    self
+    #[inline(always)]
+    pub fn token_infos(
+        &mut self,
+        token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_infos = Some(token_infos);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_token_program(&mut self, token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_token_program = Some(token_a_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_a_token_program(
+        &mut self,
+        token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_token_program = Some(token_a_token_program);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_token_program(&mut self, token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_token_program = Some(token_b_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_b_token_program(
+        &mut self,
+        token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_token_program = Some(token_b_token_program);
+        self
     }
-      #[inline(always)]
-    pub fn memo_program(&mut self, memo_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.memo_program = Some(memo_program);
-                    self
+    #[inline(always)]
+    pub fn memo_program(
+        &mut self,
+        memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.memo_program = Some(memo_program);
+        self
     }
-                    #[inline(always)]
-      pub fn a_to_b(&mut self, a_to_b: bool) -> &mut Self {
+    #[inline(always)]
+    pub fn a_to_b(&mut self, a_to_b: bool) -> &mut Self {
         self.instruction.a_to_b = Some(a_to_b);
         self
-      }
-                #[inline(always)]
-      pub fn target_limit_bps(&mut self, target_limit_bps: u64) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn target_limit_bps(&mut self, target_limit_bps: u64) -> &mut Self {
         self.instruction.target_limit_bps = Some(target_limit_bps);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: &'b solana_program::account_info::AccountInfo<'a>, is_writable: bool, is_signer: bool) -> &mut Self {
-    self.instruction.__remaining_accounts.push((account, is_writable, is_signer));
-    self
-  }
-  /// Add additional accounts to the instruction.
-  ///
-  /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
-  /// and a `bool` indicating whether the account is a signer or not.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> &mut Self {
-    self.instruction.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed(&[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-          let args = EmergencySwapInstructionArgs {
-                                                              a_to_b: self.instruction.a_to_b.clone().expect("a_to_b is not set"),
-                                                                  target_limit_bps: self.instruction.target_limit_bps.clone().expect("target_limit_bps is not set"),
-                                    };
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: &'b solana_program::account_info::AccountInfo<'a>,
+        is_writable: bool,
+        is_signer: bool,
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .push((account, is_writable, is_signer));
+        self
+    }
+    /// Add additional accounts to the instruction.
+    ///
+    /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
+    /// and a `bool` indicating whether the account is a signer or not.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .extend_from_slice(accounts);
+        self
+    }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed(&[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let args = EmergencySwapInstructionArgs {
+            a_to_b: self.instruction.a_to_b.clone().expect("a_to_b is not set"),
+            target_limit_bps: self
+                .instruction
+                .target_limit_bps
+                .clone()
+                .expect("target_limit_bps is not set"),
+        };
         let instruction = EmergencySwapCpi {
-        __program: self.instruction.__program,
-                  
-          admin_authority: self.instruction.admin_authority.expect("admin_authority is not set"),
-                  
-          strategy: self.instruction.strategy.expect("strategy is not set"),
-                  
-          global_config: self.instruction.global_config.expect("global_config is not set"),
-                  
-          token_a_mint: self.instruction.token_a_mint.expect("token_a_mint is not set"),
-                  
-          token_b_mint: self.instruction.token_b_mint.expect("token_b_mint is not set"),
-                  
-          token_a_vault: self.instruction.token_a_vault.expect("token_a_vault is not set"),
-                  
-          token_b_vault: self.instruction.token_b_vault.expect("token_b_vault is not set"),
-                  
-          base_vault_authority: self.instruction.base_vault_authority.expect("base_vault_authority is not set"),
-                  
-          pool: self.instruction.pool.expect("pool is not set"),
-                  
-          position: self.instruction.position.expect("position is not set"),
-                  
-          pool_token_vault_a: self.instruction.pool_token_vault_a.expect("pool_token_vault_a is not set"),
-                  
-          pool_token_vault_b: self.instruction.pool_token_vault_b.expect("pool_token_vault_b is not set"),
-                  
-          tick_array0: self.instruction.tick_array0.expect("tick_array0 is not set"),
-                  
-          tick_array1: self.instruction.tick_array1.expect("tick_array1 is not set"),
-                  
-          tick_array2: self.instruction.tick_array2.expect("tick_array2 is not set"),
-                  
-          oracle: self.instruction.oracle.expect("oracle is not set"),
-                  
-          pool_program: self.instruction.pool_program.expect("pool_program is not set"),
-                  
-          scope_prices: self.instruction.scope_prices.expect("scope_prices is not set"),
-                  
-          token_infos: self.instruction.token_infos.expect("token_infos is not set"),
-                  
-          token_a_token_program: self.instruction.token_a_token_program.expect("token_a_token_program is not set"),
-                  
-          token_b_token_program: self.instruction.token_b_token_program.expect("token_b_token_program is not set"),
-                  
-          memo_program: self.instruction.memo_program.expect("memo_program is not set"),
-                          __args: args,
-            };
-    instruction.invoke_signed_with_remaining_accounts(signers_seeds, &self.instruction.__remaining_accounts)
-  }
+            __program: self.instruction.__program,
+
+            admin_authority: self
+                .instruction
+                .admin_authority
+                .expect("admin_authority is not set"),
+
+            strategy: self.instruction.strategy.expect("strategy is not set"),
+
+            global_config: self
+                .instruction
+                .global_config
+                .expect("global_config is not set"),
+
+            token_a_mint: self
+                .instruction
+                .token_a_mint
+                .expect("token_a_mint is not set"),
+
+            token_b_mint: self
+                .instruction
+                .token_b_mint
+                .expect("token_b_mint is not set"),
+
+            token_a_vault: self
+                .instruction
+                .token_a_vault
+                .expect("token_a_vault is not set"),
+
+            token_b_vault: self
+                .instruction
+                .token_b_vault
+                .expect("token_b_vault is not set"),
+
+            base_vault_authority: self
+                .instruction
+                .base_vault_authority
+                .expect("base_vault_authority is not set"),
+
+            pool: self.instruction.pool.expect("pool is not set"),
+
+            position: self.instruction.position.expect("position is not set"),
+
+            pool_token_vault_a: self
+                .instruction
+                .pool_token_vault_a
+                .expect("pool_token_vault_a is not set"),
+
+            pool_token_vault_b: self
+                .instruction
+                .pool_token_vault_b
+                .expect("pool_token_vault_b is not set"),
+
+            tick_array0: self
+                .instruction
+                .tick_array0
+                .expect("tick_array0 is not set"),
+
+            tick_array1: self
+                .instruction
+                .tick_array1
+                .expect("tick_array1 is not set"),
+
+            tick_array2: self
+                .instruction
+                .tick_array2
+                .expect("tick_array2 is not set"),
+
+            oracle: self.instruction.oracle.expect("oracle is not set"),
+
+            pool_program: self
+                .instruction
+                .pool_program
+                .expect("pool_program is not set"),
+
+            scope_prices: self
+                .instruction
+                .scope_prices
+                .expect("scope_prices is not set"),
+
+            token_infos: self
+                .instruction
+                .token_infos
+                .expect("token_infos is not set"),
+
+            token_a_token_program: self
+                .instruction
+                .token_a_token_program
+                .expect("token_a_token_program is not set"),
+
+            token_b_token_program: self
+                .instruction
+                .token_b_token_program
+                .expect("token_b_token_program is not set"),
+
+            memo_program: self
+                .instruction
+                .memo_program
+                .expect("memo_program is not set"),
+            __args: args,
+        };
+        instruction.invoke_signed_with_remaining_accounts(
+            signers_seeds,
+            &self.instruction.__remaining_accounts,
+        )
+    }
 }
 
 #[derive(Clone, Debug)]
 struct EmergencySwapCpiBuilderInstruction<'a, 'b> {
-  __program: &'b solana_program::account_info::AccountInfo<'a>,
-            admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                base_vault_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                position: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_token_vault_a: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_token_vault_b: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                tick_array0: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                tick_array1: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                tick_array2: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                oracle: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                scope_prices: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                memo_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                        a_to_b: Option<bool>,
-                target_limit_bps: Option<u64>,
-        /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
-  __remaining_accounts: Vec<(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)>,
+    __program: &'b solana_program::account_info::AccountInfo<'a>,
+    admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    base_vault_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    position: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_token_vault_a: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_token_vault_b: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    tick_array0: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    tick_array1: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    tick_array2: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    oracle: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    scope_prices: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    memo_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    a_to_b: Option<bool>,
+    target_limit_bps: Option<u64>,
+    /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
+    __remaining_accounts: Vec<(
+        &'b solana_program::account_info::AccountInfo<'a>,
+        bool,
+        bool,
+    )>,
 }
-

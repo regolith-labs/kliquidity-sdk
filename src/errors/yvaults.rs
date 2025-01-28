@@ -233,7 +233,9 @@ pub enum YvaultsError {
     #[error("Kamino collateral is not valid")]
     KaminoCollateralNotValid = 0x17B9,
     /// 6074 - [DEPRECATED] Expected kamino reward is bigger then the available amount within the vault
-    #[error("[DEPRECATED] Expected kamino reward is bigger then the available amount within the vault")]
+    #[error(
+        "[DEPRECATED] Expected kamino reward is bigger then the available amount within the vault"
+    )]
     KaminoRewardExceedsAvailableAmount = 0x17BA,
     /// 6075 - Swap uneven vaults result in the opposite unbalance of the vaults
     #[error("Swap uneven vaults result in the opposite unbalance of the vaults")]
@@ -311,7 +313,9 @@ pub enum YvaultsError {
     #[error("Flash vault swap is blocked on this strategy")]
     FlashVaultSwapBlocked = 0x17D3,
     /// 6100 - Unexpected amount of tokens in ata prior flash vault swap (wrong amount_to_leave_to_user)
-    #[error("Unexpected amount of tokens in ata prior flash vault swap (wrong amount_to_leave_to_user)")]
+    #[error(
+        "Unexpected amount of tokens in ata prior flash vault swap (wrong amount_to_leave_to_user)"
+    )]
     FlashVaultSwapWrongAmountToLeave = 0x17D4,
     /// 6101 - Deposit amount less than minimal allowed
     #[error("Deposit amount less than minimal allowed")]
@@ -376,7 +380,7 @@ pub enum YvaultsError {
     /// 6121 - Decimal operation failed
     #[error("Decimal operation failed")]
     DecimalOperationFailed = 0x17E9,
-    /// 6122 - Deposit is not allowed as the strategy is not fully invested in the pool 
+    /// 6122 - Deposit is not allowed as the strategy is not fully invested in the pool
     #[error("Deposit is not allowed as the strategy is not fully invested in the pool ")]
     VaultBalancesCausesWrongSharesIssuance = 0x17EA,
     /// 6123 - Token cannot be used in strategy creation
@@ -431,10 +435,14 @@ pub enum YvaultsError {
     #[error("Flash swap is too early after the position was opened")]
     FlashSwapTooEarly = 0x17FB,
     /// 6140 - Rebalance caps reached, no rebalances are allowed until the end of the current interval
-    #[error("Rebalance caps reached, no rebalances are allowed until the end of the current interval")]
+    #[error(
+        "Rebalance caps reached, no rebalances are allowed until the end of the current interval"
+    )]
     RebalancesCapReached = 0x17FC,
     /// 6141 - Cannot swap uneven because authority is set and the given signer does not correspond
-    #[error("Cannot swap uneven because authority is set and the given signer does not correspond")]
+    #[error(
+        "Cannot swap uneven because authority is set and the given signer does not correspond"
+    )]
     SwapUnevenInvalidAuthority = 0x17FD,
     /// 6142 - Invalid tick requested
     #[error("Invalid tick requested")]
@@ -461,7 +469,9 @@ pub enum YvaultsError {
     #[error("Reward vault override not allowed")]
     RewardVaultOverrideNotAllowed = 0x1805,
     /// 6150 - Got invalid reward from the dex specific function while computing the fees/rewards update
-    #[error("Got invalid reward from the dex specific function while computing the fees/rewards update")]
+    #[error(
+        "Got invalid reward from the dex specific function while computing the fees/rewards update"
+    )]
     ComputeFeesAndRewardsInvalidReward = 0x1806,
     /// 6151 - No tokens to withdraw from treasury fee vault
     #[error("No tokens to withdraw from treasury fee vault")]
@@ -494,4 +504,3 @@ impl<T> solana_program::decode_error::DecodeError<T> for YvaultsError {
         "YvaultsError"
     }
 }
-

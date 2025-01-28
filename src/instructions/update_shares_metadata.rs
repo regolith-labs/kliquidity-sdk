@@ -5,526 +5,613 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 /// Accounts.
 pub struct UpdateSharesMetadata {
-      
-              
-          pub admin_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub strategy: solana_program::pubkey::Pubkey,
-          
-              
-          pub global_config: solana_program::pubkey::Pubkey,
-          
-              
-          pub shares_mint: solana_program::pubkey::Pubkey,
-          
-              
-          pub shares_metadata: solana_program::pubkey::Pubkey,
-          
-              
-          pub shares_mint_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub metadata_program: solana_program::pubkey::Pubkey,
-      }
+    pub admin_authority: solana_program::pubkey::Pubkey,
+
+    pub strategy: solana_program::pubkey::Pubkey,
+
+    pub global_config: solana_program::pubkey::Pubkey,
+
+    pub shares_mint: solana_program::pubkey::Pubkey,
+
+    pub shares_metadata: solana_program::pubkey::Pubkey,
+
+    pub shares_mint_authority: solana_program::pubkey::Pubkey,
+
+    pub metadata_program: solana_program::pubkey::Pubkey,
+}
 
 impl UpdateSharesMetadata {
-  pub fn instruction(&self, args: UpdateSharesMetadataInstructionArgs) -> solana_program::instruction::Instruction {
-    self.instruction_with_remaining_accounts(args, &[])
-  }
-  #[allow(clippy::vec_init_then_push)]
-  pub fn instruction_with_remaining_accounts(&self, args: UpdateSharesMetadataInstructionArgs, remaining_accounts: &[solana_program::instruction::AccountMeta]) -> solana_program::instruction::Instruction {
-    let mut accounts = Vec::with_capacity(7+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            self.admin_authority,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.strategy,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.global_config,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.shares_mint,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.shares_metadata,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.shares_mint_authority,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            self.metadata_program,
-            false
-          ));
-                      accounts.extend_from_slice(remaining_accounts);
-    let mut data = UpdateSharesMetadataInstructionData::new().try_to_vec().unwrap();
-          let mut args = args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
+    pub fn instruction(
+        &self,
+        args: UpdateSharesMetadataInstructionArgs,
+    ) -> solana_program::instruction::Instruction {
+        self.instruction_with_remaining_accounts(args, &[])
     }
-  }
+    #[allow(clippy::vec_init_then_push)]
+    pub fn instruction_with_remaining_accounts(
+        &self,
+        args: UpdateSharesMetadataInstructionArgs,
+        remaining_accounts: &[solana_program::instruction::AccountMeta],
+    ) -> solana_program::instruction::Instruction {
+        let mut accounts = Vec::with_capacity(7 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.admin_authority,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.strategy,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.global_config,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.shares_mint,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.shares_metadata,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.shares_mint_authority,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            self.metadata_program,
+            false,
+        ));
+        accounts.extend_from_slice(remaining_accounts);
+        let mut data = UpdateSharesMetadataInstructionData::new()
+            .try_to_vec()
+            .unwrap();
+        let mut args = args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        }
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct UpdateSharesMetadataInstructionData {
-            discriminator: [u8; 8],
-                        }
+pub struct UpdateSharesMetadataInstructionData {
+    discriminator: [u8; 8],
+}
 
 impl UpdateSharesMetadataInstructionData {
-  pub fn new() -> Self {
-    Self {
-                        discriminator: [155, 34, 122, 165, 245, 137, 147, 107],
-                                                            }
-  }
+    pub fn new() -> Self {
+        Self {
+            discriminator: [155, 34, 122, 165, 245, 137, 147, 107],
+        }
+    }
 }
 
 impl Default for UpdateSharesMetadataInstructionData {
-  fn default() -> Self {
-    Self::new()
-  }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct UpdateSharesMetadataInstructionArgs {
-                  pub name: String,
-                pub symbol: String,
-                pub uri: String,
-      }
-
+pub struct UpdateSharesMetadataInstructionArgs {
+    pub name: String,
+    pub symbol: String,
+    pub uri: String,
+}
 
 /// Instruction builder for `UpdateSharesMetadata`.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-          ///   1. `[]` strategy
-          ///   2. `[]` global_config
-          ///   3. `[]` shares_mint
-                ///   4. `[writable]` shares_metadata
-          ///   5. `[]` shares_mint_authority
-          ///   6. `[]` metadata_program
+///   0. `[writable, signer]` admin_authority
+///   1. `[]` strategy
+///   2. `[]` global_config
+///   3. `[]` shares_mint
+///   4. `[writable]` shares_metadata
+///   5. `[]` shares_mint_authority
+///   6. `[]` metadata_program
 #[derive(Clone, Debug, Default)]
 pub struct UpdateSharesMetadataBuilder {
-            admin_authority: Option<solana_program::pubkey::Pubkey>,
-                strategy: Option<solana_program::pubkey::Pubkey>,
-                global_config: Option<solana_program::pubkey::Pubkey>,
-                shares_mint: Option<solana_program::pubkey::Pubkey>,
-                shares_metadata: Option<solana_program::pubkey::Pubkey>,
-                shares_mint_authority: Option<solana_program::pubkey::Pubkey>,
-                metadata_program: Option<solana_program::pubkey::Pubkey>,
-                        name: Option<String>,
-                symbol: Option<String>,
-                uri: Option<String>,
-        __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
+    admin_authority: Option<solana_program::pubkey::Pubkey>,
+    strategy: Option<solana_program::pubkey::Pubkey>,
+    global_config: Option<solana_program::pubkey::Pubkey>,
+    shares_mint: Option<solana_program::pubkey::Pubkey>,
+    shares_metadata: Option<solana_program::pubkey::Pubkey>,
+    shares_mint_authority: Option<solana_program::pubkey::Pubkey>,
+    metadata_program: Option<solana_program::pubkey::Pubkey>,
+    name: Option<String>,
+    symbol: Option<String>,
+    uri: Option<String>,
+    __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
 }
 
 impl UpdateSharesMetadataBuilder {
-  pub fn new() -> Self {
-    Self::default()
-  }
-            #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.admin_authority = Some(admin_authority);
-                    self
+    pub fn new() -> Self {
+        Self::default()
     }
-            #[inline(always)]
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.admin_authority = Some(admin_authority);
+        self
+    }
+    #[inline(always)]
     pub fn strategy(&mut self, strategy: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.strategy = Some(strategy);
-                    self
+        self.strategy = Some(strategy);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn global_config(&mut self, global_config: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.global_config = Some(global_config);
-                    self
+        self.global_config = Some(global_config);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn shares_mint(&mut self, shares_mint: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.shares_mint = Some(shares_mint);
-                    self
+        self.shares_mint = Some(shares_mint);
+        self
     }
-            #[inline(always)]
-    pub fn shares_metadata(&mut self, shares_metadata: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.shares_metadata = Some(shares_metadata);
-                    self
+    #[inline(always)]
+    pub fn shares_metadata(
+        &mut self,
+        shares_metadata: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.shares_metadata = Some(shares_metadata);
+        self
     }
-            #[inline(always)]
-    pub fn shares_mint_authority(&mut self, shares_mint_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.shares_mint_authority = Some(shares_mint_authority);
-                    self
+    #[inline(always)]
+    pub fn shares_mint_authority(
+        &mut self,
+        shares_mint_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.shares_mint_authority = Some(shares_mint_authority);
+        self
     }
-            #[inline(always)]
-    pub fn metadata_program(&mut self, metadata_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.metadata_program = Some(metadata_program);
-                    self
+    #[inline(always)]
+    pub fn metadata_program(
+        &mut self,
+        metadata_program: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.metadata_program = Some(metadata_program);
+        self
     }
-                    #[inline(always)]
-      pub fn name(&mut self, name: String) -> &mut Self {
+    #[inline(always)]
+    pub fn name(&mut self, name: String) -> &mut Self {
         self.name = Some(name);
         self
-      }
-                #[inline(always)]
-      pub fn symbol(&mut self, symbol: String) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn symbol(&mut self, symbol: String) -> &mut Self {
         self.symbol = Some(symbol);
         self
-      }
-                #[inline(always)]
-      pub fn uri(&mut self, uri: String) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn uri(&mut self, uri: String) -> &mut Self {
         self.uri = Some(uri);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: solana_program::instruction::AccountMeta) -> &mut Self {
-    self.__remaining_accounts.push(account);
-    self
-  }
-  /// Add additional accounts to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[solana_program::instruction::AccountMeta]) -> &mut Self {
-    self.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[allow(clippy::clone_on_copy)]
-  pub fn instruction(&self) -> solana_program::instruction::Instruction {
-    let accounts = UpdateSharesMetadata {
-                              admin_authority: self.admin_authority.expect("admin_authority is not set"),
-                                        strategy: self.strategy.expect("strategy is not set"),
-                                        global_config: self.global_config.expect("global_config is not set"),
-                                        shares_mint: self.shares_mint.expect("shares_mint is not set"),
-                                        shares_metadata: self.shares_metadata.expect("shares_metadata is not set"),
-                                        shares_mint_authority: self.shares_mint_authority.expect("shares_mint_authority is not set"),
-                                        metadata_program: self.metadata_program.expect("metadata_program is not set"),
-                      };
-          let args = UpdateSharesMetadataInstructionArgs {
-                                                              name: self.name.clone().expect("name is not set"),
-                                                                  symbol: self.symbol.clone().expect("symbol is not set"),
-                                                                  uri: self.uri.clone().expect("uri is not set"),
-                                    };
-    
-    accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
-  }
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: solana_program::instruction::AccountMeta,
+    ) -> &mut Self {
+        self.__remaining_accounts.push(account);
+        self
+    }
+    /// Add additional accounts to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[solana_program::instruction::AccountMeta],
+    ) -> &mut Self {
+        self.__remaining_accounts.extend_from_slice(accounts);
+        self
+    }
+    #[allow(clippy::clone_on_copy)]
+    pub fn instruction(&self) -> solana_program::instruction::Instruction {
+        let accounts = UpdateSharesMetadata {
+            admin_authority: self.admin_authority.expect("admin_authority is not set"),
+            strategy: self.strategy.expect("strategy is not set"),
+            global_config: self.global_config.expect("global_config is not set"),
+            shares_mint: self.shares_mint.expect("shares_mint is not set"),
+            shares_metadata: self.shares_metadata.expect("shares_metadata is not set"),
+            shares_mint_authority: self
+                .shares_mint_authority
+                .expect("shares_mint_authority is not set"),
+            metadata_program: self.metadata_program.expect("metadata_program is not set"),
+        };
+        let args = UpdateSharesMetadataInstructionArgs {
+            name: self.name.clone().expect("name is not set"),
+            symbol: self.symbol.clone().expect("symbol is not set"),
+            uri: self.uri.clone().expect("uri is not set"),
+        };
+
+        accounts.instruction_with_remaining_accounts(args, &self.__remaining_accounts)
+    }
 }
 
-  /// `update_shares_metadata` CPI accounts.
-  pub struct UpdateSharesMetadataCpiAccounts<'a, 'b> {
-          
-                    
-              pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub shares_mint: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub shares_metadata: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub metadata_program: &'b solana_program::account_info::AccountInfo<'a>,
-            }
+/// `update_shares_metadata` CPI accounts.
+pub struct UpdateSharesMetadataCpiAccounts<'a, 'b> {
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_metadata: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub metadata_program: &'b solana_program::account_info::AccountInfo<'a>,
+}
 
 /// `update_shares_metadata` CPI instruction.
 pub struct UpdateSharesMetadataCpi<'a, 'b> {
-  /// The program to invoke.
-  pub __program: &'b solana_program::account_info::AccountInfo<'a>,
-      
-              
-          pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub shares_mint: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub shares_metadata: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub metadata_program: &'b solana_program::account_info::AccountInfo<'a>,
-            /// The arguments for the instruction.
+    /// The program to invoke.
+    pub __program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_metadata: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub metadata_program: &'b solana_program::account_info::AccountInfo<'a>,
+    /// The arguments for the instruction.
     pub __args: UpdateSharesMetadataInstructionArgs,
-  }
+}
 
 impl<'a, 'b> UpdateSharesMetadataCpi<'a, 'b> {
-  pub fn new(
-    program: &'b solana_program::account_info::AccountInfo<'a>,
-          accounts: UpdateSharesMetadataCpiAccounts<'a, 'b>,
-              args: UpdateSharesMetadataInstructionArgs,
-      ) -> Self {
-    Self {
-      __program: program,
-              admin_authority: accounts.admin_authority,
-              strategy: accounts.strategy,
-              global_config: accounts.global_config,
-              shares_mint: accounts.shares_mint,
-              shares_metadata: accounts.shares_metadata,
-              shares_mint_authority: accounts.shares_mint_authority,
-              metadata_program: accounts.metadata_program,
-                    __args: args,
-          }
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], &[])
-  }
-  #[inline(always)]
-  pub fn invoke_with_remaining_accounts(&self, remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
-  }
-  #[inline(always)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed_with_remaining_accounts(
-    &self,
-    signers_seeds: &[&[&[u8]]],
-    remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]
-  ) -> solana_program::entrypoint::ProgramResult {
-    let mut accounts = Vec::with_capacity(7+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.admin_authority.key,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.strategy.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.global_config.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.shares_mint.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.shares_metadata.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.shares_mint_authority.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.metadata_program.key,
-            false
-          ));
-                      remaining_accounts.iter().for_each(|remaining_account| {
-      accounts.push(solana_program::instruction::AccountMeta {
-          pubkey: *remaining_account.0.key,
-          is_signer: remaining_account.1,
-          is_writable: remaining_account.2,
-      })
-    });
-    let mut data = UpdateSharesMetadataInstructionData::new().try_to_vec().unwrap();
-          let mut args = self.__args.try_to_vec().unwrap();
-      data.append(&mut args);
-    
-    let instruction = solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
-    };
-    let mut account_infos = Vec::with_capacity(8 + remaining_accounts.len());
-    account_infos.push(self.__program.clone());
-                  account_infos.push(self.admin_authority.clone());
-                        account_infos.push(self.strategy.clone());
-                        account_infos.push(self.global_config.clone());
-                        account_infos.push(self.shares_mint.clone());
-                        account_infos.push(self.shares_metadata.clone());
-                        account_infos.push(self.shares_mint_authority.clone());
-                        account_infos.push(self.metadata_program.clone());
-              remaining_accounts.iter().for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
-
-    if signers_seeds.is_empty() {
-      solana_program::program::invoke(&instruction, &account_infos)
-    } else {
-      solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+    pub fn new(
+        program: &'b solana_program::account_info::AccountInfo<'a>,
+        accounts: UpdateSharesMetadataCpiAccounts<'a, 'b>,
+        args: UpdateSharesMetadataInstructionArgs,
+    ) -> Self {
+        Self {
+            __program: program,
+            admin_authority: accounts.admin_authority,
+            strategy: accounts.strategy,
+            global_config: accounts.global_config,
+            shares_mint: accounts.shares_mint,
+            shares_metadata: accounts.shares_metadata,
+            shares_mint_authority: accounts.shares_mint_authority,
+            metadata_program: accounts.metadata_program,
+            __args: args,
+        }
     }
-  }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], &[])
+    }
+    #[inline(always)]
+    pub fn invoke_with_remaining_accounts(
+        &self,
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
+    }
+    #[inline(always)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed_with_remaining_accounts(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let mut accounts = Vec::with_capacity(7 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.admin_authority.key,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.strategy.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.global_config.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.shares_mint.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.shares_metadata.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.shares_mint_authority.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.metadata_program.key,
+            false,
+        ));
+        remaining_accounts.iter().for_each(|remaining_account| {
+            accounts.push(solana_program::instruction::AccountMeta {
+                pubkey: *remaining_account.0.key,
+                is_signer: remaining_account.1,
+                is_writable: remaining_account.2,
+            })
+        });
+        let mut data = UpdateSharesMetadataInstructionData::new()
+            .try_to_vec()
+            .unwrap();
+        let mut args = self.__args.try_to_vec().unwrap();
+        data.append(&mut args);
+
+        let instruction = solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        };
+        let mut account_infos = Vec::with_capacity(8 + remaining_accounts.len());
+        account_infos.push(self.__program.clone());
+        account_infos.push(self.admin_authority.clone());
+        account_infos.push(self.strategy.clone());
+        account_infos.push(self.global_config.clone());
+        account_infos.push(self.shares_mint.clone());
+        account_infos.push(self.shares_metadata.clone());
+        account_infos.push(self.shares_mint_authority.clone());
+        account_infos.push(self.metadata_program.clone());
+        remaining_accounts
+            .iter()
+            .for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
+
+        if signers_seeds.is_empty() {
+            solana_program::program::invoke(&instruction, &account_infos)
+        } else {
+            solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+        }
+    }
 }
 
 /// Instruction builder for `UpdateSharesMetadata` via CPI.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` admin_authority
-          ///   1. `[]` strategy
-          ///   2. `[]` global_config
-          ///   3. `[]` shares_mint
-                ///   4. `[writable]` shares_metadata
-          ///   5. `[]` shares_mint_authority
-          ///   6. `[]` metadata_program
+///   0. `[writable, signer]` admin_authority
+///   1. `[]` strategy
+///   2. `[]` global_config
+///   3. `[]` shares_mint
+///   4. `[writable]` shares_metadata
+///   5. `[]` shares_mint_authority
+///   6. `[]` metadata_program
 #[derive(Clone, Debug)]
 pub struct UpdateSharesMetadataCpiBuilder<'a, 'b> {
-  instruction: Box<UpdateSharesMetadataCpiBuilderInstruction<'a, 'b>>,
+    instruction: Box<UpdateSharesMetadataCpiBuilderInstruction<'a, 'b>>,
 }
 
 impl<'a, 'b> UpdateSharesMetadataCpiBuilder<'a, 'b> {
-  pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
-    let instruction = Box::new(UpdateSharesMetadataCpiBuilderInstruction {
-      __program: program,
-              admin_authority: None,
-              strategy: None,
-              global_config: None,
-              shares_mint: None,
-              shares_metadata: None,
-              shares_mint_authority: None,
-              metadata_program: None,
-                                            name: None,
-                                symbol: None,
-                                uri: None,
-                    __remaining_accounts: Vec::new(),
-    });
-    Self { instruction }
-  }
-      #[inline(always)]
-    pub fn admin_authority(&mut self, admin_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.admin_authority = Some(admin_authority);
-                    self
+    pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
+        let instruction = Box::new(UpdateSharesMetadataCpiBuilderInstruction {
+            __program: program,
+            admin_authority: None,
+            strategy: None,
+            global_config: None,
+            shares_mint: None,
+            shares_metadata: None,
+            shares_mint_authority: None,
+            metadata_program: None,
+            name: None,
+            symbol: None,
+            uri: None,
+            __remaining_accounts: Vec::new(),
+        });
+        Self { instruction }
     }
-      #[inline(always)]
-    pub fn strategy(&mut self, strategy: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.strategy = Some(strategy);
-                    self
+    #[inline(always)]
+    pub fn admin_authority(
+        &mut self,
+        admin_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.admin_authority = Some(admin_authority);
+        self
     }
-      #[inline(always)]
-    pub fn global_config(&mut self, global_config: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.global_config = Some(global_config);
-                    self
+    #[inline(always)]
+    pub fn strategy(
+        &mut self,
+        strategy: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.strategy = Some(strategy);
+        self
     }
-      #[inline(always)]
-    pub fn shares_mint(&mut self, shares_mint: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.shares_mint = Some(shares_mint);
-                    self
+    #[inline(always)]
+    pub fn global_config(
+        &mut self,
+        global_config: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.global_config = Some(global_config);
+        self
     }
-      #[inline(always)]
-    pub fn shares_metadata(&mut self, shares_metadata: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.shares_metadata = Some(shares_metadata);
-                    self
+    #[inline(always)]
+    pub fn shares_mint(
+        &mut self,
+        shares_mint: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.shares_mint = Some(shares_mint);
+        self
     }
-      #[inline(always)]
-    pub fn shares_mint_authority(&mut self, shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.shares_mint_authority = Some(shares_mint_authority);
-                    self
+    #[inline(always)]
+    pub fn shares_metadata(
+        &mut self,
+        shares_metadata: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.shares_metadata = Some(shares_metadata);
+        self
     }
-      #[inline(always)]
-    pub fn metadata_program(&mut self, metadata_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.metadata_program = Some(metadata_program);
-                    self
+    #[inline(always)]
+    pub fn shares_mint_authority(
+        &mut self,
+        shares_mint_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.shares_mint_authority = Some(shares_mint_authority);
+        self
     }
-                    #[inline(always)]
-      pub fn name(&mut self, name: String) -> &mut Self {
+    #[inline(always)]
+    pub fn metadata_program(
+        &mut self,
+        metadata_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.metadata_program = Some(metadata_program);
+        self
+    }
+    #[inline(always)]
+    pub fn name(&mut self, name: String) -> &mut Self {
         self.instruction.name = Some(name);
         self
-      }
-                #[inline(always)]
-      pub fn symbol(&mut self, symbol: String) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn symbol(&mut self, symbol: String) -> &mut Self {
         self.instruction.symbol = Some(symbol);
         self
-      }
-                #[inline(always)]
-      pub fn uri(&mut self, uri: String) -> &mut Self {
+    }
+    #[inline(always)]
+    pub fn uri(&mut self, uri: String) -> &mut Self {
         self.instruction.uri = Some(uri);
         self
-      }
-        /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: &'b solana_program::account_info::AccountInfo<'a>, is_writable: bool, is_signer: bool) -> &mut Self {
-    self.instruction.__remaining_accounts.push((account, is_writable, is_signer));
-    self
-  }
-  /// Add additional accounts to the instruction.
-  ///
-  /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
-  /// and a `bool` indicating whether the account is a signer or not.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> &mut Self {
-    self.instruction.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed(&[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-          let args = UpdateSharesMetadataInstructionArgs {
-                                                              name: self.instruction.name.clone().expect("name is not set"),
-                                                                  symbol: self.instruction.symbol.clone().expect("symbol is not set"),
-                                                                  uri: self.instruction.uri.clone().expect("uri is not set"),
-                                    };
+    }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: &'b solana_program::account_info::AccountInfo<'a>,
+        is_writable: bool,
+        is_signer: bool,
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .push((account, is_writable, is_signer));
+        self
+    }
+    /// Add additional accounts to the instruction.
+    ///
+    /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
+    /// and a `bool` indicating whether the account is a signer or not.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .extend_from_slice(accounts);
+        self
+    }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed(&[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let args = UpdateSharesMetadataInstructionArgs {
+            name: self.instruction.name.clone().expect("name is not set"),
+            symbol: self.instruction.symbol.clone().expect("symbol is not set"),
+            uri: self.instruction.uri.clone().expect("uri is not set"),
+        };
         let instruction = UpdateSharesMetadataCpi {
-        __program: self.instruction.__program,
-                  
-          admin_authority: self.instruction.admin_authority.expect("admin_authority is not set"),
-                  
-          strategy: self.instruction.strategy.expect("strategy is not set"),
-                  
-          global_config: self.instruction.global_config.expect("global_config is not set"),
-                  
-          shares_mint: self.instruction.shares_mint.expect("shares_mint is not set"),
-                  
-          shares_metadata: self.instruction.shares_metadata.expect("shares_metadata is not set"),
-                  
-          shares_mint_authority: self.instruction.shares_mint_authority.expect("shares_mint_authority is not set"),
-                  
-          metadata_program: self.instruction.metadata_program.expect("metadata_program is not set"),
-                          __args: args,
-            };
-    instruction.invoke_signed_with_remaining_accounts(signers_seeds, &self.instruction.__remaining_accounts)
-  }
+            __program: self.instruction.__program,
+
+            admin_authority: self
+                .instruction
+                .admin_authority
+                .expect("admin_authority is not set"),
+
+            strategy: self.instruction.strategy.expect("strategy is not set"),
+
+            global_config: self
+                .instruction
+                .global_config
+                .expect("global_config is not set"),
+
+            shares_mint: self
+                .instruction
+                .shares_mint
+                .expect("shares_mint is not set"),
+
+            shares_metadata: self
+                .instruction
+                .shares_metadata
+                .expect("shares_metadata is not set"),
+
+            shares_mint_authority: self
+                .instruction
+                .shares_mint_authority
+                .expect("shares_mint_authority is not set"),
+
+            metadata_program: self
+                .instruction
+                .metadata_program
+                .expect("metadata_program is not set"),
+            __args: args,
+        };
+        instruction.invoke_signed_with_remaining_accounts(
+            signers_seeds,
+            &self.instruction.__remaining_accounts,
+        )
+    }
 }
 
 #[derive(Clone, Debug)]
 struct UpdateSharesMetadataCpiBuilderInstruction<'a, 'b> {
-  __program: &'b solana_program::account_info::AccountInfo<'a>,
-            admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                shares_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                shares_metadata: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                shares_mint_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                metadata_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                        name: Option<String>,
-                symbol: Option<String>,
-                uri: Option<String>,
-        /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
-  __remaining_accounts: Vec<(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)>,
+    __program: &'b solana_program::account_info::AccountInfo<'a>,
+    admin_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    shares_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    shares_metadata: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    shares_mint_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    metadata_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    name: Option<String>,
+    symbol: Option<String>,
+    uri: Option<String>,
+    /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
+    __remaining_accounts: Vec<(
+        &'b solana_program::account_info::AccountInfo<'a>,
+        bool,
+        bool,
+    )>,
 }
-

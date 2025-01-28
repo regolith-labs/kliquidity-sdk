@@ -5,17 +5,15 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceRaw {
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::Bytes>"))]
-pub params: [u8; 128],
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::Bytes>"))]
-pub state: [u8; 256],
-pub reference_price_type: u8,
+    #[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::Bytes>"))]
+    pub params: [u8; 128],
+    #[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::Bytes>"))]
+    pub state: [u8; 256],
+    pub reference_price_type: u8,
 }
-
-

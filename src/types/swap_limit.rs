@@ -5,20 +5,18 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SwapLimit {
-Bps(u64),
-Absolute {
-/// Amount of src token expected by the user to perform the swap
-src_amount_to_swap: u64,
-/// Amount of dst token the user provides in exchange
-dst_amount_to_vault: u64,
-a_to_b: bool,
-},
+    Bps(u64),
+    Absolute {
+        /// Amount of src token expected by the user to perform the swap
+        src_amount_to_swap: u64,
+        /// Amount of dst token the user provides in exchange
+        dst_amount_to_vault: u64,
+        a_to_b: bool,
+    },
 }
-
-

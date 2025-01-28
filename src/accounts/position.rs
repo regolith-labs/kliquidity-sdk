@@ -5,81 +5,91 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use solana_program::pubkey::Pubkey;
 use crate::types::PositionRewardInfo;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
-
+use borsh::BorshSerialize;
+use solana_program::pubkey::Pubkey;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Position {
-pub discriminator: [u8; 8],
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub whirlpool: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub position_mint: Pubkey,
-pub liquidity: u128,
-pub tick_lower_index: i32,
-pub tick_upper_index: i32,
-pub fee_growth_checkpoint_a: u128,
-pub fee_owed_a: u64,
-pub fee_growth_checkpoint_b: u128,
-pub fee_owed_b: u64,
-pub reward_infos: [PositionRewardInfo; 3],
+    pub discriminator: [u8; 8],
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub whirlpool: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub position_mint: Pubkey,
+    pub liquidity: u128,
+    pub tick_lower_index: i32,
+    pub tick_upper_index: i32,
+    pub fee_growth_checkpoint_a: u128,
+    pub fee_owed_a: u64,
+    pub fee_growth_checkpoint_b: u128,
+    pub fee_owed_b: u64,
+    pub reward_infos: [PositionRewardInfo; 3],
 }
 
-
 impl Position {
-      pub const LEN: usize = 216;
-  
-  
-  
-  #[inline(always)]
-  pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
-    let mut data = data;
-    Self::deserialize(&mut data)
-  }
+    pub const LEN: usize = 216;
+
+    #[inline(always)]
+    pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
+        let mut data = data;
+        Self::deserialize(&mut data)
+    }
 }
 
 impl<'a> TryFrom<&solana_program::account_info::AccountInfo<'a>> for Position {
-  type Error = std::io::Error;
+    type Error = std::io::Error;
 
-  fn try_from(account_info: &solana_program::account_info::AccountInfo<'a>) -> Result<Self, Self::Error> {
-      let mut data: &[u8] = &(*account_info.data).borrow();
-      Self::deserialize(&mut data)
-  }
+    fn try_from(
+        account_info: &solana_program::account_info::AccountInfo<'a>,
+    ) -> Result<Self, Self::Error> {
+        let mut data: &[u8] = &(*account_info.data).borrow();
+        Self::deserialize(&mut data)
+    }
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_position(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::DecodedAccount<Position>, Error> {
-  let accounts = fetch_all_position(rpc, vec![address])?;
-  Ok(accounts[0].clone())
+    let accounts = fetch_all_position(rpc, vec![address])?;
+    Ok(accounts[0].clone())
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_position(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::DecodedAccount<Position>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::DecodedAccount<Position>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      let account = accounts[i].as_ref().ok_or(format!("Account not found: {}", address))?;
-      let data = Position::from_bytes(&account.data)?;
-      decoded_accounts.push(super::DecodedAccount { address, account: account.clone(), data });
+        let address = addresses[i];
+        let account = accounts[i]
+            .as_ref()
+            .ok_or(format!("Account not found: {}", address))?;
+        let data = Position::from_bytes(&account.data)?;
+        decoded_accounts.push(super::DecodedAccount {
+            address,
+            account: account.clone(),
+            data,
+        });
     }
     Ok(decoded_accounts)
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_position(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::MaybeAccount<Position>, Error> {
     let accounts = fetch_all_maybe_position(rpc, vec![address])?;
     Ok(accounts[0].clone())
@@ -87,46 +97,48 @@ pub fn fetch_maybe_position(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_position(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::MaybeAccount<Position>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::MaybeAccount<Position>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      if let Some(account) = accounts[i].as_ref() {
-        let data = Position::from_bytes(&account.data)?;
-        decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount { address, account: account.clone(), data }));
-      } else {
-        decoded_accounts.push(super::MaybeAccount::NotFound(address));
-      }
+        let address = addresses[i];
+        if let Some(account) = accounts[i].as_ref() {
+            let data = Position::from_bytes(&account.data)?;
+            decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount {
+                address,
+                account: account.clone(),
+                data,
+            }));
+        } else {
+            decoded_accounts.push(super::MaybeAccount::NotFound(address));
+        }
     }
-  Ok(decoded_accounts)
+    Ok(decoded_accounts)
 }
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountDeserialize for Position {
-      fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountDeserialize for Position {
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
         Ok(Self::deserialize(buf)?)
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountSerialize for Position {}
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountSerialize for Position {}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::Owner for Position {
-      fn owner() -> Pubkey {
+#[cfg(feature = "anchor")]
+impl anchor_lang::Owner for Position {
+    fn owner() -> Pubkey {
         crate::YVAULTS_ID
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::IdlBuild for Position {}
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::IdlBuild for Position {}
 
-  
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::Discriminator for Position {
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::Discriminator for Position {
     const DISCRIMINATOR: [u8; 8] = [0; 8];
-  }
-
+}

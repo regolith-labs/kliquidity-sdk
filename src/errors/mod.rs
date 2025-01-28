@@ -5,7 +5,6 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-      pub(crate) mod yvaults;
-  
-      pub use self::yvaults::YvaultsError;
-  
+pub(crate) mod yvaults;
+
+pub use self::yvaults::YvaultsError;

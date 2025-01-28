@@ -5,17 +5,15 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use crate::types::RebalanceAutodriftWindow;
 use crate::types::RebalanceAutodriftStep;
-use borsh::BorshSerialize;
+use crate::types::RebalanceAutodriftWindow;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceAutodriftState {
-pub last_window: RebalanceAutodriftWindow,
-pub current_window: RebalanceAutodriftWindow,
-pub step: RebalanceAutodriftStep,
+    pub last_window: RebalanceAutodriftWindow,
+    pub current_window: RebalanceAutodriftWindow,
+    pub step: RebalanceAutodriftStep,
 }
-
-

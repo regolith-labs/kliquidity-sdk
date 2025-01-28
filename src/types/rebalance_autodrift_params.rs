@@ -5,21 +5,19 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use crate::types::StakingRateSource;
 use crate::types::DriftDirection;
-use borsh::BorshSerialize;
+use crate::types::StakingRateSource;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceAutodriftParams {
-pub init_drift_ticks_per_epoch: u32,
-pub ticks_below_mid: i32,
-pub ticks_above_mid: i32,
-pub frontrun_multiplier_bps: u16,
-pub staking_rate_a_source: StakingRateSource,
-pub staking_rate_b_source: StakingRateSource,
-pub init_drift_direction: DriftDirection,
+    pub init_drift_ticks_per_epoch: u32,
+    pub ticks_below_mid: i32,
+    pub ticks_above_mid: i32,
+    pub frontrun_multiplier_bps: u16,
+    pub staking_rate_a_source: StakingRateSource,
+    pub staking_rate_b_source: StakingRateSource,
+    pub init_drift_direction: DriftDirection,
 }
-
-

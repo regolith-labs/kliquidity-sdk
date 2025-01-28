@@ -5,24 +5,28 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use solana_program::pubkey::Pubkey;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
+use solana_program::pubkey::Pubkey;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct KaminoRewardInfo {
-pub decimals: u64,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub reward_vault: Pubkey,
-#[cfg_attr(feature = "serde", serde(with = "serde_with::As::<serde_with::DisplayFromStr>"))]
-pub reward_mint: Pubkey,
-pub reward_collateral_id: u64,
-pub last_issuance_ts: u64,
-pub reward_per_second: u64,
-pub amount_uncollected: u64,
-pub amount_issued_cumulative: u64,
-pub amount_available: u64,
+    pub decimals: u64,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub reward_vault: Pubkey,
+    #[cfg_attr(
+        feature = "serde",
+        serde(with = "serde_with::As::<serde_with::DisplayFromStr>")
+    )]
+    pub reward_mint: Pubkey,
+    pub reward_collateral_id: u64,
+    pub last_issuance_ts: u64,
+    pub reward_per_second: u64,
+    pub amount_uncollected: u64,
+    pub amount_issued_cumulative: u64,
+    pub amount_available: u64,
 }
-
-

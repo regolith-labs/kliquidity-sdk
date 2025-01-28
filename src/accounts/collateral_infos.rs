@@ -6,69 +6,73 @@
 //!
 
 use crate::types::CollateralInfo;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
-
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CollateralInfos {
-pub discriminator: [u8; 8],
-#[cfg_attr(feature = "serde", serde(with = "serde_big_array::BigArray"))]
-pub infos: [CollateralInfo; 256],
+    pub discriminator: [u8; 8],
+    #[cfg_attr(feature = "serde", serde(with = "serde_big_array::BigArray"))]
+    pub infos: [CollateralInfo; 256],
 }
 
-
 impl CollateralInfos {
-      pub const LEN: usize = 55304;
-  
-  
-  
-  #[inline(always)]
-  pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
-    let mut data = data;
-    Self::deserialize(&mut data)
-  }
+    pub const LEN: usize = 55304;
+
+    #[inline(always)]
+    pub fn from_bytes(data: &[u8]) -> Result<Self, std::io::Error> {
+        let mut data = data;
+        Self::deserialize(&mut data)
+    }
 }
 
 impl<'a> TryFrom<&solana_program::account_info::AccountInfo<'a>> for CollateralInfos {
-  type Error = std::io::Error;
+    type Error = std::io::Error;
 
-  fn try_from(account_info: &solana_program::account_info::AccountInfo<'a>) -> Result<Self, Self::Error> {
-      let mut data: &[u8] = &(*account_info.data).borrow();
-      Self::deserialize(&mut data)
-  }
+    fn try_from(
+        account_info: &solana_program::account_info::AccountInfo<'a>,
+    ) -> Result<Self, Self::Error> {
+        let mut data: &[u8] = &(*account_info.data).borrow();
+        Self::deserialize(&mut data)
+    }
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_collateral_infos(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::DecodedAccount<CollateralInfos>, Error> {
-  let accounts = fetch_all_collateral_infos(rpc, vec![address])?;
-  Ok(accounts[0].clone())
+    let accounts = fetch_all_collateral_infos(rpc, vec![address])?;
+    Ok(accounts[0].clone())
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_collateral_infos(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::DecodedAccount<CollateralInfos>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::DecodedAccount<CollateralInfos>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      let account = accounts[i].as_ref().ok_or(format!("Account not found: {}", address))?;
-      let data = CollateralInfos::from_bytes(&account.data)?;
-      decoded_accounts.push(super::DecodedAccount { address, account: account.clone(), data });
+        let address = addresses[i];
+        let account = accounts[i]
+            .as_ref()
+            .ok_or(format!("Account not found: {}", address))?;
+        let data = CollateralInfos::from_bytes(&account.data)?;
+        decoded_accounts.push(super::DecodedAccount {
+            address,
+            account: account.clone(),
+            data,
+        });
     }
     Ok(decoded_accounts)
 }
 
 #[cfg(feature = "fetch")]
 pub fn fetch_maybe_collateral_infos(
-  rpc: &solana_client::rpc_client::RpcClient,
-  address: &Pubkey,
+    rpc: &solana_client::rpc_client::RpcClient,
+    address: &Pubkey,
 ) -> Result<super::MaybeAccount<CollateralInfos>, Error> {
     let accounts = fetch_all_maybe_collateral_infos(rpc, vec![address])?;
     Ok(accounts[0].clone())
@@ -76,46 +80,48 @@ pub fn fetch_maybe_collateral_infos(
 
 #[cfg(feature = "fetch")]
 pub fn fetch_all_maybe_collateral_infos(
-  rpc: &solana_client::rpc_client::RpcClient,
-  addresses: Vec<Pubkey>,
+    rpc: &solana_client::rpc_client::RpcClient,
+    addresses: Vec<Pubkey>,
 ) -> Result<Vec<super::MaybeAccount<CollateralInfos>>, Error> {
     let accounts = rpc.get_multiple_accounts(&addresses)?;
     let mut decoded_accounts: Vec<super::MaybeAccount<CollateralInfos>> = Vec::new();
     for i in 0..addresses.len() {
-      let address = addresses[i];
-      if let Some(account) = accounts[i].as_ref() {
-        let data = CollateralInfos::from_bytes(&account.data)?;
-        decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount { address, account: account.clone(), data }));
-      } else {
-        decoded_accounts.push(super::MaybeAccount::NotFound(address));
-      }
+        let address = addresses[i];
+        if let Some(account) = accounts[i].as_ref() {
+            let data = CollateralInfos::from_bytes(&account.data)?;
+            decoded_accounts.push(super::MaybeAccount::Exists(super::DecodedAccount {
+                address,
+                account: account.clone(),
+                data,
+            }));
+        } else {
+            decoded_accounts.push(super::MaybeAccount::NotFound(address));
+        }
     }
-  Ok(decoded_accounts)
+    Ok(decoded_accounts)
 }
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountDeserialize for CollateralInfos {
-      fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountDeserialize for CollateralInfos {
+    fn try_deserialize_unchecked(buf: &mut &[u8]) -> anchor_lang::Result<Self> {
         Ok(Self::deserialize(buf)?)
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::AccountSerialize for CollateralInfos {}
+#[cfg(feature = "anchor")]
+impl anchor_lang::AccountSerialize for CollateralInfos {}
 
-  #[cfg(feature = "anchor")]
-  impl anchor_lang::Owner for CollateralInfos {
-      fn owner() -> Pubkey {
+#[cfg(feature = "anchor")]
+impl anchor_lang::Owner for CollateralInfos {
+    fn owner() -> Pubkey {
         crate::YVAULTS_ID
-      }
-  }
+    }
+}
 
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::IdlBuild for CollateralInfos {}
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::IdlBuild for CollateralInfos {}
 
-  
-  #[cfg(feature = "anchor-idl-build")]
-  impl anchor_lang::Discriminator for CollateralInfos {
+#[cfg(feature = "anchor-idl-build")]
+impl anchor_lang::Discriminator for CollateralInfos {
     const DISCRIMINATOR: [u8; 8] = [0; 8];
-  }
-
+}

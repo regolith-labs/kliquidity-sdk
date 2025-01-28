@@ -6,17 +6,15 @@
 //!
 
 use crate::types::DriftDirection;
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RebalanceDriftParams {
-pub start_mid_tick: i32,
-pub ticks_below_mid: i32,
-pub ticks_above_mid: i32,
-pub seconds_per_tick: u64,
-pub direction: DriftDirection,
+    pub start_mid_tick: i32,
+    pub ticks_below_mid: i32,
+    pub ticks_above_mid: i32,
+    pub seconds_per_tick: u64,
+    pub direction: DriftDirection,
 }
-
-

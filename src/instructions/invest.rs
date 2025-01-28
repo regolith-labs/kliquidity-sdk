@@ -5,1184 +5,1351 @@
 //! <https://github.com/codama-idl/codama>
 //!
 
-use borsh::BorshSerialize;
 use borsh::BorshDeserialize;
+use borsh::BorshSerialize;
 
 /// Accounts.
 pub struct Invest {
-      
-              
-          pub payer: solana_program::pubkey::Pubkey,
-          
-              
-          pub strategy: solana_program::pubkey::Pubkey,
-          
-              
-          pub global_config: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_vault: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_vault: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_mint: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_mint: solana_program::pubkey::Pubkey,
-          
-              
-          pub base_vault_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_a_token_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_b_token_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub memo_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_program2022: solana_program::pubkey::Pubkey,
-          
-              
-          pub position: solana_program::pubkey::Pubkey,
-          
-              
-          pub raydium_protocol_position_or_base_vault_authority: solana_program::pubkey::Pubkey,
-          
-              
-          pub position_token_account: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_token_vault_a: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_token_vault_b: solana_program::pubkey::Pubkey,
-          
-              
-          pub tick_array_lower: solana_program::pubkey::Pubkey,
-          
-              
-          pub tick_array_upper: solana_program::pubkey::Pubkey,
-          
-              
-          pub scope_prices: solana_program::pubkey::Pubkey,
-          
-              
-          pub token_infos: solana_program::pubkey::Pubkey,
-          
-              
-          pub pool_program: solana_program::pubkey::Pubkey,
-          
-              
-          pub instruction_sysvar_account: solana_program::pubkey::Pubkey,
-          
-              
-          pub event_authority: Option<solana_program::pubkey::Pubkey>,
-      }
+    pub payer: solana_program::pubkey::Pubkey,
+
+    pub strategy: solana_program::pubkey::Pubkey,
+
+    pub global_config: solana_program::pubkey::Pubkey,
+
+    pub token_a_vault: solana_program::pubkey::Pubkey,
+
+    pub token_b_vault: solana_program::pubkey::Pubkey,
+
+    pub token_a_mint: solana_program::pubkey::Pubkey,
+
+    pub token_b_mint: solana_program::pubkey::Pubkey,
+
+    pub base_vault_authority: solana_program::pubkey::Pubkey,
+
+    pub pool: solana_program::pubkey::Pubkey,
+
+    pub token_a_token_program: solana_program::pubkey::Pubkey,
+
+    pub token_b_token_program: solana_program::pubkey::Pubkey,
+
+    pub memo_program: solana_program::pubkey::Pubkey,
+
+    pub token_program: solana_program::pubkey::Pubkey,
+
+    pub token_program2022: solana_program::pubkey::Pubkey,
+
+    pub position: solana_program::pubkey::Pubkey,
+
+    pub raydium_protocol_position_or_base_vault_authority: solana_program::pubkey::Pubkey,
+
+    pub position_token_account: solana_program::pubkey::Pubkey,
+
+    pub pool_token_vault_a: solana_program::pubkey::Pubkey,
+
+    pub pool_token_vault_b: solana_program::pubkey::Pubkey,
+
+    pub tick_array_lower: solana_program::pubkey::Pubkey,
+
+    pub tick_array_upper: solana_program::pubkey::Pubkey,
+
+    pub scope_prices: solana_program::pubkey::Pubkey,
+
+    pub token_infos: solana_program::pubkey::Pubkey,
+
+    pub pool_program: solana_program::pubkey::Pubkey,
+
+    pub instruction_sysvar_account: solana_program::pubkey::Pubkey,
+
+    pub event_authority: Option<solana_program::pubkey::Pubkey>,
+}
 
 impl Invest {
-  pub fn instruction(&self) -> solana_program::instruction::Instruction {
-    self.instruction_with_remaining_accounts(&[])
-  }
-  #[allow(clippy::vec_init_then_push)]
-  pub fn instruction_with_remaining_accounts(&self, remaining_accounts: &[solana_program::instruction::AccountMeta]) -> solana_program::instruction::Instruction {
-    let mut accounts = Vec::with_capacity(26+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            self.payer,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+    pub fn instruction(&self) -> solana_program::instruction::Instruction {
+        self.instruction_with_remaining_accounts(&[])
+    }
+    #[allow(clippy::vec_init_then_push)]
+    pub fn instruction_with_remaining_accounts(
+        &self,
+        remaining_accounts: &[solana_program::instruction::AccountMeta],
+    ) -> solana_program::instruction::Instruction {
+        let mut accounts = Vec::with_capacity(26 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.payer, true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.strategy,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.global_config,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.token_a_vault,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.token_b_vault,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_a_mint,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_b_mint,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.base_vault_authority,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            self.pool,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            self.pool, false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_a_token_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_b_token_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.memo_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_program2022,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.position,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.raydium_protocol_position_or_base_vault_authority,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.position_token_account,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.pool_token_vault_a,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.pool_token_vault_b,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.tick_array_lower,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
             self.tick_array_upper,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.scope_prices,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.token_infos,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.pool_program,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
             self.instruction_sysvar_account,
-            false
-          ));
-                                                      if let Some(event_authority) = self.event_authority {
-              accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            false,
+        ));
+        if let Some(event_authority) = self.event_authority {
+            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
                 event_authority,
                 false,
-              ));
-            } else {
-              accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            ));
+        } else {
+            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
                 crate::YVAULTS_ID,
                 false,
-              ));
-            }
-                                accounts.extend_from_slice(remaining_accounts);
-    let data = InvestInstructionData::new().try_to_vec().unwrap();
-    
-    solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
+            ));
+        }
+        accounts.extend_from_slice(remaining_accounts);
+        let data = InvestInstructionData::new().try_to_vec().unwrap();
+
+        solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        }
     }
-  }
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
- pub struct InvestInstructionData {
-            discriminator: [u8; 8],
-      }
+pub struct InvestInstructionData {
+    discriminator: [u8; 8],
+}
 
 impl InvestInstructionData {
-  pub fn new() -> Self {
-    Self {
-                        discriminator: [13, 245, 180, 103, 254, 182, 121, 4],
-                  }
-  }
+    pub fn new() -> Self {
+        Self {
+            discriminator: [13, 245, 180, 103, 254, 182, 121, 4],
+        }
+    }
 }
 
 impl Default for InvestInstructionData {
-  fn default() -> Self {
-    Self::new()
-  }
+    fn default() -> Self {
+        Self::new()
+    }
 }
-
-
 
 /// Instruction builder for `Invest`.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` payer
-                ///   1. `[writable]` strategy
-          ///   2. `[]` global_config
-                ///   3. `[writable]` token_a_vault
-                ///   4. `[writable]` token_b_vault
-          ///   5. `[]` token_a_mint
-          ///   6. `[]` token_b_mint
-                ///   7. `[writable]` base_vault_authority
-                ///   8. `[writable]` pool
-          ///   9. `[]` token_a_token_program
-          ///   10. `[]` token_b_token_program
-          ///   11. `[]` memo_program
-                ///   12. `[optional]` token_program (default to `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`)
-          ///   13. `[]` token_program2022
-                ///   14. `[writable]` position
-                ///   15. `[writable]` raydium_protocol_position_or_base_vault_authority
-                ///   16. `[writable]` position_token_account
-                ///   17. `[writable]` pool_token_vault_a
-                ///   18. `[writable]` pool_token_vault_b
-                ///   19. `[writable]` tick_array_lower
-                ///   20. `[writable]` tick_array_upper
-          ///   21. `[]` scope_prices
-          ///   22. `[]` token_infos
-          ///   23. `[]` pool_program
-                ///   24. `[optional]` instruction_sysvar_account (default to `Sysvar1nstructions1111111111111111111111111`)
-                ///   25. `[optional]` event_authority
+///   0. `[writable, signer]` payer
+///   1. `[writable]` strategy
+///   2. `[]` global_config
+///   3. `[writable]` token_a_vault
+///   4. `[writable]` token_b_vault
+///   5. `[]` token_a_mint
+///   6. `[]` token_b_mint
+///   7. `[writable]` base_vault_authority
+///   8. `[writable]` pool
+///   9. `[]` token_a_token_program
+///   10. `[]` token_b_token_program
+///   11. `[]` memo_program
+///   12. `[optional]` token_program (default to `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`)
+///   13. `[]` token_program2022
+///   14. `[writable]` position
+///   15. `[writable]` raydium_protocol_position_or_base_vault_authority
+///   16. `[writable]` position_token_account
+///   17. `[writable]` pool_token_vault_a
+///   18. `[writable]` pool_token_vault_b
+///   19. `[writable]` tick_array_lower
+///   20. `[writable]` tick_array_upper
+///   21. `[]` scope_prices
+///   22. `[]` token_infos
+///   23. `[]` pool_program
+///   24. `[optional]` instruction_sysvar_account (default to `Sysvar1nstructions1111111111111111111111111`)
+///   25. `[optional]` event_authority
 #[derive(Clone, Debug, Default)]
 pub struct InvestBuilder {
-            payer: Option<solana_program::pubkey::Pubkey>,
-                strategy: Option<solana_program::pubkey::Pubkey>,
-                global_config: Option<solana_program::pubkey::Pubkey>,
-                token_a_vault: Option<solana_program::pubkey::Pubkey>,
-                token_b_vault: Option<solana_program::pubkey::Pubkey>,
-                token_a_mint: Option<solana_program::pubkey::Pubkey>,
-                token_b_mint: Option<solana_program::pubkey::Pubkey>,
-                base_vault_authority: Option<solana_program::pubkey::Pubkey>,
-                pool: Option<solana_program::pubkey::Pubkey>,
-                token_a_token_program: Option<solana_program::pubkey::Pubkey>,
-                token_b_token_program: Option<solana_program::pubkey::Pubkey>,
-                memo_program: Option<solana_program::pubkey::Pubkey>,
-                token_program: Option<solana_program::pubkey::Pubkey>,
-                token_program2022: Option<solana_program::pubkey::Pubkey>,
-                position: Option<solana_program::pubkey::Pubkey>,
-                raydium_protocol_position_or_base_vault_authority: Option<solana_program::pubkey::Pubkey>,
-                position_token_account: Option<solana_program::pubkey::Pubkey>,
-                pool_token_vault_a: Option<solana_program::pubkey::Pubkey>,
-                pool_token_vault_b: Option<solana_program::pubkey::Pubkey>,
-                tick_array_lower: Option<solana_program::pubkey::Pubkey>,
-                tick_array_upper: Option<solana_program::pubkey::Pubkey>,
-                scope_prices: Option<solana_program::pubkey::Pubkey>,
-                token_infos: Option<solana_program::pubkey::Pubkey>,
-                pool_program: Option<solana_program::pubkey::Pubkey>,
-                instruction_sysvar_account: Option<solana_program::pubkey::Pubkey>,
-                event_authority: Option<solana_program::pubkey::Pubkey>,
-                __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
+    payer: Option<solana_program::pubkey::Pubkey>,
+    strategy: Option<solana_program::pubkey::Pubkey>,
+    global_config: Option<solana_program::pubkey::Pubkey>,
+    token_a_vault: Option<solana_program::pubkey::Pubkey>,
+    token_b_vault: Option<solana_program::pubkey::Pubkey>,
+    token_a_mint: Option<solana_program::pubkey::Pubkey>,
+    token_b_mint: Option<solana_program::pubkey::Pubkey>,
+    base_vault_authority: Option<solana_program::pubkey::Pubkey>,
+    pool: Option<solana_program::pubkey::Pubkey>,
+    token_a_token_program: Option<solana_program::pubkey::Pubkey>,
+    token_b_token_program: Option<solana_program::pubkey::Pubkey>,
+    memo_program: Option<solana_program::pubkey::Pubkey>,
+    token_program: Option<solana_program::pubkey::Pubkey>,
+    token_program2022: Option<solana_program::pubkey::Pubkey>,
+    position: Option<solana_program::pubkey::Pubkey>,
+    raydium_protocol_position_or_base_vault_authority: Option<solana_program::pubkey::Pubkey>,
+    position_token_account: Option<solana_program::pubkey::Pubkey>,
+    pool_token_vault_a: Option<solana_program::pubkey::Pubkey>,
+    pool_token_vault_b: Option<solana_program::pubkey::Pubkey>,
+    tick_array_lower: Option<solana_program::pubkey::Pubkey>,
+    tick_array_upper: Option<solana_program::pubkey::Pubkey>,
+    scope_prices: Option<solana_program::pubkey::Pubkey>,
+    token_infos: Option<solana_program::pubkey::Pubkey>,
+    pool_program: Option<solana_program::pubkey::Pubkey>,
+    instruction_sysvar_account: Option<solana_program::pubkey::Pubkey>,
+    event_authority: Option<solana_program::pubkey::Pubkey>,
+    __remaining_accounts: Vec<solana_program::instruction::AccountMeta>,
 }
 
 impl InvestBuilder {
-  pub fn new() -> Self {
-    Self::default()
-  }
-            #[inline(always)]
+    pub fn new() -> Self {
+        Self::default()
+    }
+    #[inline(always)]
     pub fn payer(&mut self, payer: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.payer = Some(payer);
-                    self
+        self.payer = Some(payer);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn strategy(&mut self, strategy: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.strategy = Some(strategy);
-                    self
+        self.strategy = Some(strategy);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn global_config(&mut self, global_config: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.global_config = Some(global_config);
-                    self
+        self.global_config = Some(global_config);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_a_vault(&mut self, token_a_vault: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_vault = Some(token_a_vault);
-                    self
+        self.token_a_vault = Some(token_a_vault);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_b_vault(&mut self, token_b_vault: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_vault = Some(token_b_vault);
-                    self
+        self.token_b_vault = Some(token_b_vault);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_a_mint(&mut self, token_a_mint: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_mint = Some(token_a_mint);
-                    self
+        self.token_a_mint = Some(token_a_mint);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_b_mint(&mut self, token_b_mint: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_mint = Some(token_b_mint);
-                    self
+        self.token_b_mint = Some(token_b_mint);
+        self
     }
-            #[inline(always)]
-    pub fn base_vault_authority(&mut self, base_vault_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.base_vault_authority = Some(base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn base_vault_authority(
+        &mut self,
+        base_vault_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.base_vault_authority = Some(base_vault_authority);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn pool(&mut self, pool: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool = Some(pool);
-                    self
+        self.pool = Some(pool);
+        self
     }
-            #[inline(always)]
-    pub fn token_a_token_program(&mut self, token_a_token_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_a_token_program = Some(token_a_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_a_token_program(
+        &mut self,
+        token_a_token_program: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.token_a_token_program = Some(token_a_token_program);
+        self
     }
-            #[inline(always)]
-    pub fn token_b_token_program(&mut self, token_b_token_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_b_token_program = Some(token_b_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_b_token_program(
+        &mut self,
+        token_b_token_program: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.token_b_token_program = Some(token_b_token_program);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn memo_program(&mut self, memo_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.memo_program = Some(memo_program);
-                    self
+        self.memo_program = Some(memo_program);
+        self
     }
-            /// `[optional account, default to 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA']`
-#[inline(always)]
+    /// `[optional account, default to 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA']`
+    #[inline(always)]
     pub fn token_program(&mut self, token_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_program = Some(token_program);
-                    self
+        self.token_program = Some(token_program);
+        self
     }
-            #[inline(always)]
-    pub fn token_program2022(&mut self, token_program2022: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_program2022 = Some(token_program2022);
-                    self
+    #[inline(always)]
+    pub fn token_program2022(
+        &mut self,
+        token_program2022: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.token_program2022 = Some(token_program2022);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn position(&mut self, position: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.position = Some(position);
-                    self
+        self.position = Some(position);
+        self
     }
-            #[inline(always)]
-    pub fn raydium_protocol_position_or_base_vault_authority(&mut self, raydium_protocol_position_or_base_vault_authority: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.raydium_protocol_position_or_base_vault_authority = Some(raydium_protocol_position_or_base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn raydium_protocol_position_or_base_vault_authority(
+        &mut self,
+        raydium_protocol_position_or_base_vault_authority: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.raydium_protocol_position_or_base_vault_authority =
+            Some(raydium_protocol_position_or_base_vault_authority);
+        self
     }
-            #[inline(always)]
-    pub fn position_token_account(&mut self, position_token_account: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.position_token_account = Some(position_token_account);
-                    self
+    #[inline(always)]
+    pub fn position_token_account(
+        &mut self,
+        position_token_account: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.position_token_account = Some(position_token_account);
+        self
     }
-            #[inline(always)]
-    pub fn pool_token_vault_a(&mut self, pool_token_vault_a: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_token_vault_a = Some(pool_token_vault_a);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_a(
+        &mut self,
+        pool_token_vault_a: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.pool_token_vault_a = Some(pool_token_vault_a);
+        self
     }
-            #[inline(always)]
-    pub fn pool_token_vault_b(&mut self, pool_token_vault_b: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_token_vault_b = Some(pool_token_vault_b);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_b(
+        &mut self,
+        pool_token_vault_b: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.pool_token_vault_b = Some(pool_token_vault_b);
+        self
     }
-            #[inline(always)]
-    pub fn tick_array_lower(&mut self, tick_array_lower: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.tick_array_lower = Some(tick_array_lower);
-                    self
+    #[inline(always)]
+    pub fn tick_array_lower(
+        &mut self,
+        tick_array_lower: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.tick_array_lower = Some(tick_array_lower);
+        self
     }
-            #[inline(always)]
-    pub fn tick_array_upper(&mut self, tick_array_upper: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.tick_array_upper = Some(tick_array_upper);
-                    self
+    #[inline(always)]
+    pub fn tick_array_upper(
+        &mut self,
+        tick_array_upper: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.tick_array_upper = Some(tick_array_upper);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn scope_prices(&mut self, scope_prices: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.scope_prices = Some(scope_prices);
-                    self
+        self.scope_prices = Some(scope_prices);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn token_infos(&mut self, token_infos: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.token_infos = Some(token_infos);
-                    self
+        self.token_infos = Some(token_infos);
+        self
     }
-            #[inline(always)]
+    #[inline(always)]
     pub fn pool_program(&mut self, pool_program: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.pool_program = Some(pool_program);
-                    self
+        self.pool_program = Some(pool_program);
+        self
     }
-            /// `[optional account, default to 'Sysvar1nstructions1111111111111111111111111']`
-#[inline(always)]
-    pub fn instruction_sysvar_account(&mut self, instruction_sysvar_account: solana_program::pubkey::Pubkey) -> &mut Self {
-                        self.instruction_sysvar_account = Some(instruction_sysvar_account);
-                    self
+    /// `[optional account, default to 'Sysvar1nstructions1111111111111111111111111']`
+    #[inline(always)]
+    pub fn instruction_sysvar_account(
+        &mut self,
+        instruction_sysvar_account: solana_program::pubkey::Pubkey,
+    ) -> &mut Self {
+        self.instruction_sysvar_account = Some(instruction_sysvar_account);
+        self
     }
-            /// `[optional account]`
-#[inline(always)]
-    pub fn event_authority(&mut self, event_authority: Option<solana_program::pubkey::Pubkey>) -> &mut Self {
-                        self.event_authority = event_authority;
-                    self
+    /// `[optional account]`
+    #[inline(always)]
+    pub fn event_authority(
+        &mut self,
+        event_authority: Option<solana_program::pubkey::Pubkey>,
+    ) -> &mut Self {
+        self.event_authority = event_authority;
+        self
     }
-            /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: solana_program::instruction::AccountMeta) -> &mut Self {
-    self.__remaining_accounts.push(account);
-    self
-  }
-  /// Add additional accounts to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[solana_program::instruction::AccountMeta]) -> &mut Self {
-    self.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[allow(clippy::clone_on_copy)]
-  pub fn instruction(&self) -> solana_program::instruction::Instruction {
-    let accounts = Invest {
-                              payer: self.payer.expect("payer is not set"),
-                                        strategy: self.strategy.expect("strategy is not set"),
-                                        global_config: self.global_config.expect("global_config is not set"),
-                                        token_a_vault: self.token_a_vault.expect("token_a_vault is not set"),
-                                        token_b_vault: self.token_b_vault.expect("token_b_vault is not set"),
-                                        token_a_mint: self.token_a_mint.expect("token_a_mint is not set"),
-                                        token_b_mint: self.token_b_mint.expect("token_b_mint is not set"),
-                                        base_vault_authority: self.base_vault_authority.expect("base_vault_authority is not set"),
-                                        pool: self.pool.expect("pool is not set"),
-                                        token_a_token_program: self.token_a_token_program.expect("token_a_token_program is not set"),
-                                        token_b_token_program: self.token_b_token_program.expect("token_b_token_program is not set"),
-                                        memo_program: self.memo_program.expect("memo_program is not set"),
-                                        token_program: self.token_program.unwrap_or(solana_program::pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")),
-                                        token_program2022: self.token_program2022.expect("token_program2022 is not set"),
-                                        position: self.position.expect("position is not set"),
-                                        raydium_protocol_position_or_base_vault_authority: self.raydium_protocol_position_or_base_vault_authority.expect("raydium_protocol_position_or_base_vault_authority is not set"),
-                                        position_token_account: self.position_token_account.expect("position_token_account is not set"),
-                                        pool_token_vault_a: self.pool_token_vault_a.expect("pool_token_vault_a is not set"),
-                                        pool_token_vault_b: self.pool_token_vault_b.expect("pool_token_vault_b is not set"),
-                                        tick_array_lower: self.tick_array_lower.expect("tick_array_lower is not set"),
-                                        tick_array_upper: self.tick_array_upper.expect("tick_array_upper is not set"),
-                                        scope_prices: self.scope_prices.expect("scope_prices is not set"),
-                                        token_infos: self.token_infos.expect("token_infos is not set"),
-                                        pool_program: self.pool_program.expect("pool_program is not set"),
-                                        instruction_sysvar_account: self.instruction_sysvar_account.unwrap_or(solana_program::pubkey!("Sysvar1nstructions1111111111111111111111111")),
-                                        event_authority: self.event_authority,
-                      };
-    
-    accounts.instruction_with_remaining_accounts(&self.__remaining_accounts)
-  }
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: solana_program::instruction::AccountMeta,
+    ) -> &mut Self {
+        self.__remaining_accounts.push(account);
+        self
+    }
+    /// Add additional accounts to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[solana_program::instruction::AccountMeta],
+    ) -> &mut Self {
+        self.__remaining_accounts.extend_from_slice(accounts);
+        self
+    }
+    #[allow(clippy::clone_on_copy)]
+    pub fn instruction(&self) -> solana_program::instruction::Instruction {
+        let accounts = Invest {
+            payer: self.payer.expect("payer is not set"),
+            strategy: self.strategy.expect("strategy is not set"),
+            global_config: self.global_config.expect("global_config is not set"),
+            token_a_vault: self.token_a_vault.expect("token_a_vault is not set"),
+            token_b_vault: self.token_b_vault.expect("token_b_vault is not set"),
+            token_a_mint: self.token_a_mint.expect("token_a_mint is not set"),
+            token_b_mint: self.token_b_mint.expect("token_b_mint is not set"),
+            base_vault_authority: self
+                .base_vault_authority
+                .expect("base_vault_authority is not set"),
+            pool: self.pool.expect("pool is not set"),
+            token_a_token_program: self
+                .token_a_token_program
+                .expect("token_a_token_program is not set"),
+            token_b_token_program: self
+                .token_b_token_program
+                .expect("token_b_token_program is not set"),
+            memo_program: self.memo_program.expect("memo_program is not set"),
+            token_program: self.token_program.unwrap_or(solana_program::pubkey!(
+                "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+            )),
+            token_program2022: self
+                .token_program2022
+                .expect("token_program2022 is not set"),
+            position: self.position.expect("position is not set"),
+            raydium_protocol_position_or_base_vault_authority: self
+                .raydium_protocol_position_or_base_vault_authority
+                .expect("raydium_protocol_position_or_base_vault_authority is not set"),
+            position_token_account: self
+                .position_token_account
+                .expect("position_token_account is not set"),
+            pool_token_vault_a: self
+                .pool_token_vault_a
+                .expect("pool_token_vault_a is not set"),
+            pool_token_vault_b: self
+                .pool_token_vault_b
+                .expect("pool_token_vault_b is not set"),
+            tick_array_lower: self.tick_array_lower.expect("tick_array_lower is not set"),
+            tick_array_upper: self.tick_array_upper.expect("tick_array_upper is not set"),
+            scope_prices: self.scope_prices.expect("scope_prices is not set"),
+            token_infos: self.token_infos.expect("token_infos is not set"),
+            pool_program: self.pool_program.expect("pool_program is not set"),
+            instruction_sysvar_account: self.instruction_sysvar_account.unwrap_or(
+                solana_program::pubkey!("Sysvar1nstructions1111111111111111111111111"),
+            ),
+            event_authority: self.event_authority,
+        };
+
+        accounts.instruction_with_remaining_accounts(&self.__remaining_accounts)
+    }
 }
 
-  /// `invest` CPI accounts.
-  pub struct InvestCpiAccounts<'a, 'b> {
-          
-                    
-              pub payer: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_program2022: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub position: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub raydium_protocol_position_or_base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub position_token_account: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>,
-                
-                    
-              pub event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-            }
+/// `invest` CPI accounts.
+pub struct InvestCpiAccounts<'a, 'b> {
+    pub payer: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_program2022: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub raydium_protocol_position_or_base_vault_authority:
+        &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position_token_account: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+}
 
 /// `invest` CPI instruction.
 pub struct InvestCpi<'a, 'b> {
-  /// The program to invoke.
-  pub __program: &'b solana_program::account_info::AccountInfo<'a>,
-      
-              
-          pub payer: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_program2022: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub position: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub raydium_protocol_position_or_base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub position_token_account: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>,
-          
-              
-          pub event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-        }
+    /// The program to invoke.
+    pub __program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub payer: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub strategy: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub global_config: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_program2022: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub raydium_protocol_position_or_base_vault_authority:
+        &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub position_token_account: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>,
+
+    pub event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+}
 
 impl<'a, 'b> InvestCpi<'a, 'b> {
-  pub fn new(
-    program: &'b solana_program::account_info::AccountInfo<'a>,
-          accounts: InvestCpiAccounts<'a, 'b>,
-          ) -> Self {
-    Self {
-      __program: program,
-              payer: accounts.payer,
-              strategy: accounts.strategy,
-              global_config: accounts.global_config,
-              token_a_vault: accounts.token_a_vault,
-              token_b_vault: accounts.token_b_vault,
-              token_a_mint: accounts.token_a_mint,
-              token_b_mint: accounts.token_b_mint,
-              base_vault_authority: accounts.base_vault_authority,
-              pool: accounts.pool,
-              token_a_token_program: accounts.token_a_token_program,
-              token_b_token_program: accounts.token_b_token_program,
-              memo_program: accounts.memo_program,
-              token_program: accounts.token_program,
-              token_program2022: accounts.token_program2022,
-              position: accounts.position,
-              raydium_protocol_position_or_base_vault_authority: accounts.raydium_protocol_position_or_base_vault_authority,
-              position_token_account: accounts.position_token_account,
-              pool_token_vault_a: accounts.pool_token_vault_a,
-              pool_token_vault_b: accounts.pool_token_vault_b,
-              tick_array_lower: accounts.tick_array_lower,
-              tick_array_upper: accounts.tick_array_upper,
-              scope_prices: accounts.scope_prices,
-              token_infos: accounts.token_infos,
-              pool_program: accounts.pool_program,
-              instruction_sysvar_account: accounts.instruction_sysvar_account,
-              event_authority: accounts.event_authority,
-                }
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], &[])
-  }
-  #[inline(always)]
-  pub fn invoke_with_remaining_accounts(&self, remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
-  }
-  #[inline(always)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed_with_remaining_accounts(
-    &self,
-    signers_seeds: &[&[&[u8]]],
-    remaining_accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]
-  ) -> solana_program::entrypoint::ProgramResult {
-    let mut accounts = Vec::with_capacity(26+ remaining_accounts.len());
-                            accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.payer.key,
-            true
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.strategy.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.global_config.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.token_a_vault.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.token_b_vault.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_a_mint.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_b_mint.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.base_vault_authority.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_a_token_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_b_token_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.memo_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_program2022.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.position.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.raydium_protocol_position_or_base_vault_authority.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.position_token_account.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool_token_vault_a.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.pool_token_vault_b.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.tick_array_lower.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new(
-            *self.tick_array_upper.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.scope_prices.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.token_infos.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.pool_program.key,
-            false
-          ));
-                                          accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-            *self.instruction_sysvar_account.key,
-            false
-          ));
-                                          if let Some(event_authority) = self.event_authority {
-            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-              *event_authority.key,
-              false,
-            ));
-          } else {
-            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
-              crate::YVAULTS_ID,
-              false,
-            ));
-          }
-                      remaining_accounts.iter().for_each(|remaining_account| {
-      accounts.push(solana_program::instruction::AccountMeta {
-          pubkey: *remaining_account.0.key,
-          is_signer: remaining_account.1,
-          is_writable: remaining_account.2,
-      })
-    });
-    let data = InvestInstructionData::new().try_to_vec().unwrap();
-    
-    let instruction = solana_program::instruction::Instruction {
-      program_id: crate::YVAULTS_ID,
-      accounts,
-      data,
-    };
-    let mut account_infos = Vec::with_capacity(27 + remaining_accounts.len());
-    account_infos.push(self.__program.clone());
-                  account_infos.push(self.payer.clone());
-                        account_infos.push(self.strategy.clone());
-                        account_infos.push(self.global_config.clone());
-                        account_infos.push(self.token_a_vault.clone());
-                        account_infos.push(self.token_b_vault.clone());
-                        account_infos.push(self.token_a_mint.clone());
-                        account_infos.push(self.token_b_mint.clone());
-                        account_infos.push(self.base_vault_authority.clone());
-                        account_infos.push(self.pool.clone());
-                        account_infos.push(self.token_a_token_program.clone());
-                        account_infos.push(self.token_b_token_program.clone());
-                        account_infos.push(self.memo_program.clone());
-                        account_infos.push(self.token_program.clone());
-                        account_infos.push(self.token_program2022.clone());
-                        account_infos.push(self.position.clone());
-                        account_infos.push(self.raydium_protocol_position_or_base_vault_authority.clone());
-                        account_infos.push(self.position_token_account.clone());
-                        account_infos.push(self.pool_token_vault_a.clone());
-                        account_infos.push(self.pool_token_vault_b.clone());
-                        account_infos.push(self.tick_array_lower.clone());
-                        account_infos.push(self.tick_array_upper.clone());
-                        account_infos.push(self.scope_prices.clone());
-                        account_infos.push(self.token_infos.clone());
-                        account_infos.push(self.pool_program.clone());
-                        account_infos.push(self.instruction_sysvar_account.clone());
-                        if let Some(event_authority) = self.event_authority {
-          account_infos.push(event_authority.clone());
+    pub fn new(
+        program: &'b solana_program::account_info::AccountInfo<'a>,
+        accounts: InvestCpiAccounts<'a, 'b>,
+    ) -> Self {
+        Self {
+            __program: program,
+            payer: accounts.payer,
+            strategy: accounts.strategy,
+            global_config: accounts.global_config,
+            token_a_vault: accounts.token_a_vault,
+            token_b_vault: accounts.token_b_vault,
+            token_a_mint: accounts.token_a_mint,
+            token_b_mint: accounts.token_b_mint,
+            base_vault_authority: accounts.base_vault_authority,
+            pool: accounts.pool,
+            token_a_token_program: accounts.token_a_token_program,
+            token_b_token_program: accounts.token_b_token_program,
+            memo_program: accounts.memo_program,
+            token_program: accounts.token_program,
+            token_program2022: accounts.token_program2022,
+            position: accounts.position,
+            raydium_protocol_position_or_base_vault_authority: accounts
+                .raydium_protocol_position_or_base_vault_authority,
+            position_token_account: accounts.position_token_account,
+            pool_token_vault_a: accounts.pool_token_vault_a,
+            pool_token_vault_b: accounts.pool_token_vault_b,
+            tick_array_lower: accounts.tick_array_lower,
+            tick_array_upper: accounts.tick_array_upper,
+            scope_prices: accounts.scope_prices,
+            token_infos: accounts.token_infos,
+            pool_program: accounts.pool_program,
+            instruction_sysvar_account: accounts.instruction_sysvar_account,
+            event_authority: accounts.event_authority,
         }
-              remaining_accounts.iter().for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
-
-    if signers_seeds.is_empty() {
-      solana_program::program::invoke(&instruction, &account_infos)
-    } else {
-      solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
     }
-  }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], &[])
+    }
+    #[inline(always)]
+    pub fn invoke_with_remaining_accounts(
+        &self,
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(&[], remaining_accounts)
+    }
+    #[inline(always)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed_with_remaining_accounts(signers_seeds, &[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed_with_remaining_accounts(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+        remaining_accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> solana_program::entrypoint::ProgramResult {
+        let mut accounts = Vec::with_capacity(26 + remaining_accounts.len());
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.payer.key,
+            true,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.strategy.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.global_config.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.token_a_vault.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.token_b_vault.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_a_mint.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_b_mint.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.base_vault_authority.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_a_token_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_b_token_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.memo_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_program2022.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.position.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.raydium_protocol_position_or_base_vault_authority.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.position_token_account.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool_token_vault_a.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.pool_token_vault_b.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.tick_array_lower.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new(
+            *self.tick_array_upper.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.scope_prices.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.token_infos.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.pool_program.key,
+            false,
+        ));
+        accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+            *self.instruction_sysvar_account.key,
+            false,
+        ));
+        if let Some(event_authority) = self.event_authority {
+            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+                *event_authority.key,
+                false,
+            ));
+        } else {
+            accounts.push(solana_program::instruction::AccountMeta::new_readonly(
+                crate::YVAULTS_ID,
+                false,
+            ));
+        }
+        remaining_accounts.iter().for_each(|remaining_account| {
+            accounts.push(solana_program::instruction::AccountMeta {
+                pubkey: *remaining_account.0.key,
+                is_signer: remaining_account.1,
+                is_writable: remaining_account.2,
+            })
+        });
+        let data = InvestInstructionData::new().try_to_vec().unwrap();
+
+        let instruction = solana_program::instruction::Instruction {
+            program_id: crate::YVAULTS_ID,
+            accounts,
+            data,
+        };
+        let mut account_infos = Vec::with_capacity(27 + remaining_accounts.len());
+        account_infos.push(self.__program.clone());
+        account_infos.push(self.payer.clone());
+        account_infos.push(self.strategy.clone());
+        account_infos.push(self.global_config.clone());
+        account_infos.push(self.token_a_vault.clone());
+        account_infos.push(self.token_b_vault.clone());
+        account_infos.push(self.token_a_mint.clone());
+        account_infos.push(self.token_b_mint.clone());
+        account_infos.push(self.base_vault_authority.clone());
+        account_infos.push(self.pool.clone());
+        account_infos.push(self.token_a_token_program.clone());
+        account_infos.push(self.token_b_token_program.clone());
+        account_infos.push(self.memo_program.clone());
+        account_infos.push(self.token_program.clone());
+        account_infos.push(self.token_program2022.clone());
+        account_infos.push(self.position.clone());
+        account_infos.push(
+            self.raydium_protocol_position_or_base_vault_authority
+                .clone(),
+        );
+        account_infos.push(self.position_token_account.clone());
+        account_infos.push(self.pool_token_vault_a.clone());
+        account_infos.push(self.pool_token_vault_b.clone());
+        account_infos.push(self.tick_array_lower.clone());
+        account_infos.push(self.tick_array_upper.clone());
+        account_infos.push(self.scope_prices.clone());
+        account_infos.push(self.token_infos.clone());
+        account_infos.push(self.pool_program.clone());
+        account_infos.push(self.instruction_sysvar_account.clone());
+        if let Some(event_authority) = self.event_authority {
+            account_infos.push(event_authority.clone());
+        }
+        remaining_accounts
+            .iter()
+            .for_each(|remaining_account| account_infos.push(remaining_account.0.clone()));
+
+        if signers_seeds.is_empty() {
+            solana_program::program::invoke(&instruction, &account_infos)
+        } else {
+            solana_program::program::invoke_signed(&instruction, &account_infos, signers_seeds)
+        }
+    }
 }
 
 /// Instruction builder for `Invest` via CPI.
 ///
 /// ### Accounts:
 ///
-                      ///   0. `[writable, signer]` payer
-                ///   1. `[writable]` strategy
-          ///   2. `[]` global_config
-                ///   3. `[writable]` token_a_vault
-                ///   4. `[writable]` token_b_vault
-          ///   5. `[]` token_a_mint
-          ///   6. `[]` token_b_mint
-                ///   7. `[writable]` base_vault_authority
-                ///   8. `[writable]` pool
-          ///   9. `[]` token_a_token_program
-          ///   10. `[]` token_b_token_program
-          ///   11. `[]` memo_program
-          ///   12. `[]` token_program
-          ///   13. `[]` token_program2022
-                ///   14. `[writable]` position
-                ///   15. `[writable]` raydium_protocol_position_or_base_vault_authority
-                ///   16. `[writable]` position_token_account
-                ///   17. `[writable]` pool_token_vault_a
-                ///   18. `[writable]` pool_token_vault_b
-                ///   19. `[writable]` tick_array_lower
-                ///   20. `[writable]` tick_array_upper
-          ///   21. `[]` scope_prices
-          ///   22. `[]` token_infos
-          ///   23. `[]` pool_program
-          ///   24. `[]` instruction_sysvar_account
-                ///   25. `[optional]` event_authority
+///   0. `[writable, signer]` payer
+///   1. `[writable]` strategy
+///   2. `[]` global_config
+///   3. `[writable]` token_a_vault
+///   4. `[writable]` token_b_vault
+///   5. `[]` token_a_mint
+///   6. `[]` token_b_mint
+///   7. `[writable]` base_vault_authority
+///   8. `[writable]` pool
+///   9. `[]` token_a_token_program
+///   10. `[]` token_b_token_program
+///   11. `[]` memo_program
+///   12. `[]` token_program
+///   13. `[]` token_program2022
+///   14. `[writable]` position
+///   15. `[writable]` raydium_protocol_position_or_base_vault_authority
+///   16. `[writable]` position_token_account
+///   17. `[writable]` pool_token_vault_a
+///   18. `[writable]` pool_token_vault_b
+///   19. `[writable]` tick_array_lower
+///   20. `[writable]` tick_array_upper
+///   21. `[]` scope_prices
+///   22. `[]` token_infos
+///   23. `[]` pool_program
+///   24. `[]` instruction_sysvar_account
+///   25. `[optional]` event_authority
 #[derive(Clone, Debug)]
 pub struct InvestCpiBuilder<'a, 'b> {
-  instruction: Box<InvestCpiBuilderInstruction<'a, 'b>>,
+    instruction: Box<InvestCpiBuilderInstruction<'a, 'b>>,
 }
 
 impl<'a, 'b> InvestCpiBuilder<'a, 'b> {
-  pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
-    let instruction = Box::new(InvestCpiBuilderInstruction {
-      __program: program,
-              payer: None,
-              strategy: None,
-              global_config: None,
-              token_a_vault: None,
-              token_b_vault: None,
-              token_a_mint: None,
-              token_b_mint: None,
-              base_vault_authority: None,
-              pool: None,
-              token_a_token_program: None,
-              token_b_token_program: None,
-              memo_program: None,
-              token_program: None,
-              token_program2022: None,
-              position: None,
-              raydium_protocol_position_or_base_vault_authority: None,
-              position_token_account: None,
-              pool_token_vault_a: None,
-              pool_token_vault_b: None,
-              tick_array_lower: None,
-              tick_array_upper: None,
-              scope_prices: None,
-              token_infos: None,
-              pool_program: None,
-              instruction_sysvar_account: None,
-              event_authority: None,
-                                __remaining_accounts: Vec::new(),
-    });
-    Self { instruction }
-  }
-      #[inline(always)]
+    pub fn new(program: &'b solana_program::account_info::AccountInfo<'a>) -> Self {
+        let instruction = Box::new(InvestCpiBuilderInstruction {
+            __program: program,
+            payer: None,
+            strategy: None,
+            global_config: None,
+            token_a_vault: None,
+            token_b_vault: None,
+            token_a_mint: None,
+            token_b_mint: None,
+            base_vault_authority: None,
+            pool: None,
+            token_a_token_program: None,
+            token_b_token_program: None,
+            memo_program: None,
+            token_program: None,
+            token_program2022: None,
+            position: None,
+            raydium_protocol_position_or_base_vault_authority: None,
+            position_token_account: None,
+            pool_token_vault_a: None,
+            pool_token_vault_b: None,
+            tick_array_lower: None,
+            tick_array_upper: None,
+            scope_prices: None,
+            token_infos: None,
+            pool_program: None,
+            instruction_sysvar_account: None,
+            event_authority: None,
+            __remaining_accounts: Vec::new(),
+        });
+        Self { instruction }
+    }
+    #[inline(always)]
     pub fn payer(&mut self, payer: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.payer = Some(payer);
-                    self
+        self.instruction.payer = Some(payer);
+        self
     }
-      #[inline(always)]
-    pub fn strategy(&mut self, strategy: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.strategy = Some(strategy);
-                    self
+    #[inline(always)]
+    pub fn strategy(
+        &mut self,
+        strategy: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.strategy = Some(strategy);
+        self
     }
-      #[inline(always)]
-    pub fn global_config(&mut self, global_config: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.global_config = Some(global_config);
-                    self
+    #[inline(always)]
+    pub fn global_config(
+        &mut self,
+        global_config: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.global_config = Some(global_config);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_vault(&mut self, token_a_vault: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_vault = Some(token_a_vault);
-                    self
+    #[inline(always)]
+    pub fn token_a_vault(
+        &mut self,
+        token_a_vault: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_vault = Some(token_a_vault);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_vault(&mut self, token_b_vault: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_vault = Some(token_b_vault);
-                    self
+    #[inline(always)]
+    pub fn token_b_vault(
+        &mut self,
+        token_b_vault: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_vault = Some(token_b_vault);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_mint(&mut self, token_a_mint: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_mint = Some(token_a_mint);
-                    self
+    #[inline(always)]
+    pub fn token_a_mint(
+        &mut self,
+        token_a_mint: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_mint = Some(token_a_mint);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_mint(&mut self, token_b_mint: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_mint = Some(token_b_mint);
-                    self
+    #[inline(always)]
+    pub fn token_b_mint(
+        &mut self,
+        token_b_mint: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_mint = Some(token_b_mint);
+        self
     }
-      #[inline(always)]
-    pub fn base_vault_authority(&mut self, base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.base_vault_authority = Some(base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn base_vault_authority(
+        &mut self,
+        base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.base_vault_authority = Some(base_vault_authority);
+        self
     }
-      #[inline(always)]
+    #[inline(always)]
     pub fn pool(&mut self, pool: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool = Some(pool);
-                    self
+        self.instruction.pool = Some(pool);
+        self
     }
-      #[inline(always)]
-    pub fn token_a_token_program(&mut self, token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_a_token_program = Some(token_a_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_a_token_program(
+        &mut self,
+        token_a_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_a_token_program = Some(token_a_token_program);
+        self
     }
-      #[inline(always)]
-    pub fn token_b_token_program(&mut self, token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_b_token_program = Some(token_b_token_program);
-                    self
+    #[inline(always)]
+    pub fn token_b_token_program(
+        &mut self,
+        token_b_token_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_b_token_program = Some(token_b_token_program);
+        self
     }
-      #[inline(always)]
-    pub fn memo_program(&mut self, memo_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.memo_program = Some(memo_program);
-                    self
+    #[inline(always)]
+    pub fn memo_program(
+        &mut self,
+        memo_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.memo_program = Some(memo_program);
+        self
     }
-      #[inline(always)]
-    pub fn token_program(&mut self, token_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_program = Some(token_program);
-                    self
+    #[inline(always)]
+    pub fn token_program(
+        &mut self,
+        token_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_program = Some(token_program);
+        self
     }
-      #[inline(always)]
-    pub fn token_program2022(&mut self, token_program2022: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_program2022 = Some(token_program2022);
-                    self
+    #[inline(always)]
+    pub fn token_program2022(
+        &mut self,
+        token_program2022: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_program2022 = Some(token_program2022);
+        self
     }
-      #[inline(always)]
-    pub fn position(&mut self, position: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.position = Some(position);
-                    self
+    #[inline(always)]
+    pub fn position(
+        &mut self,
+        position: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.position = Some(position);
+        self
     }
-      #[inline(always)]
-    pub fn raydium_protocol_position_or_base_vault_authority(&mut self, raydium_protocol_position_or_base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.raydium_protocol_position_or_base_vault_authority = Some(raydium_protocol_position_or_base_vault_authority);
-                    self
+    #[inline(always)]
+    pub fn raydium_protocol_position_or_base_vault_authority(
+        &mut self,
+        raydium_protocol_position_or_base_vault_authority: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction
+            .raydium_protocol_position_or_base_vault_authority =
+            Some(raydium_protocol_position_or_base_vault_authority);
+        self
     }
-      #[inline(always)]
-    pub fn position_token_account(&mut self, position_token_account: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.position_token_account = Some(position_token_account);
-                    self
+    #[inline(always)]
+    pub fn position_token_account(
+        &mut self,
+        position_token_account: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.position_token_account = Some(position_token_account);
+        self
     }
-      #[inline(always)]
-    pub fn pool_token_vault_a(&mut self, pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_token_vault_a = Some(pool_token_vault_a);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_a(
+        &mut self,
+        pool_token_vault_a: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_token_vault_a = Some(pool_token_vault_a);
+        self
     }
-      #[inline(always)]
-    pub fn pool_token_vault_b(&mut self, pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_token_vault_b = Some(pool_token_vault_b);
-                    self
+    #[inline(always)]
+    pub fn pool_token_vault_b(
+        &mut self,
+        pool_token_vault_b: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_token_vault_b = Some(pool_token_vault_b);
+        self
     }
-      #[inline(always)]
-    pub fn tick_array_lower(&mut self, tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.tick_array_lower = Some(tick_array_lower);
-                    self
+    #[inline(always)]
+    pub fn tick_array_lower(
+        &mut self,
+        tick_array_lower: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.tick_array_lower = Some(tick_array_lower);
+        self
     }
-      #[inline(always)]
-    pub fn tick_array_upper(&mut self, tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.tick_array_upper = Some(tick_array_upper);
-                    self
+    #[inline(always)]
+    pub fn tick_array_upper(
+        &mut self,
+        tick_array_upper: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.tick_array_upper = Some(tick_array_upper);
+        self
     }
-      #[inline(always)]
-    pub fn scope_prices(&mut self, scope_prices: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.scope_prices = Some(scope_prices);
-                    self
+    #[inline(always)]
+    pub fn scope_prices(
+        &mut self,
+        scope_prices: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.scope_prices = Some(scope_prices);
+        self
     }
-      #[inline(always)]
-    pub fn token_infos(&mut self, token_infos: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.token_infos = Some(token_infos);
-                    self
+    #[inline(always)]
+    pub fn token_infos(
+        &mut self,
+        token_infos: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.token_infos = Some(token_infos);
+        self
     }
-      #[inline(always)]
-    pub fn pool_program(&mut self, pool_program: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.pool_program = Some(pool_program);
-                    self
+    #[inline(always)]
+    pub fn pool_program(
+        &mut self,
+        pool_program: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.pool_program = Some(pool_program);
+        self
     }
-      #[inline(always)]
-    pub fn instruction_sysvar_account(&mut self, instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>) -> &mut Self {
-                        self.instruction.instruction_sysvar_account = Some(instruction_sysvar_account);
-                    self
+    #[inline(always)]
+    pub fn instruction_sysvar_account(
+        &mut self,
+        instruction_sysvar_account: &'b solana_program::account_info::AccountInfo<'a>,
+    ) -> &mut Self {
+        self.instruction.instruction_sysvar_account = Some(instruction_sysvar_account);
+        self
     }
-      /// `[optional account]`
-#[inline(always)]
-    pub fn event_authority(&mut self, event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>) -> &mut Self {
-                        self.instruction.event_authority = event_authority;
-                    self
+    /// `[optional account]`
+    #[inline(always)]
+    pub fn event_authority(
+        &mut self,
+        event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    ) -> &mut Self {
+        self.instruction.event_authority = event_authority;
+        self
     }
-            /// Add an additional account to the instruction.
-  #[inline(always)]
-  pub fn add_remaining_account(&mut self, account: &'b solana_program::account_info::AccountInfo<'a>, is_writable: bool, is_signer: bool) -> &mut Self {
-    self.instruction.__remaining_accounts.push((account, is_writable, is_signer));
-    self
-  }
-  /// Add additional accounts to the instruction.
-  ///
-  /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
-  /// and a `bool` indicating whether the account is a signer or not.
-  #[inline(always)]
-  pub fn add_remaining_accounts(&mut self, accounts: &[(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)]) -> &mut Self {
-    self.instruction.__remaining_accounts.extend_from_slice(accounts);
-    self
-  }
-  #[inline(always)]
-  pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
-    self.invoke_signed(&[])
-  }
-  #[allow(clippy::clone_on_copy)]
-  #[allow(clippy::vec_init_then_push)]
-  pub fn invoke_signed(&self, signers_seeds: &[&[&[u8]]]) -> solana_program::entrypoint::ProgramResult {
+    /// Add an additional account to the instruction.
+    #[inline(always)]
+    pub fn add_remaining_account(
+        &mut self,
+        account: &'b solana_program::account_info::AccountInfo<'a>,
+        is_writable: bool,
+        is_signer: bool,
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .push((account, is_writable, is_signer));
+        self
+    }
+    /// Add additional accounts to the instruction.
+    ///
+    /// Each account is represented by a tuple of the `AccountInfo`, a `bool` indicating whether the account is writable or not,
+    /// and a `bool` indicating whether the account is a signer or not.
+    #[inline(always)]
+    pub fn add_remaining_accounts(
+        &mut self,
+        accounts: &[(
+            &'b solana_program::account_info::AccountInfo<'a>,
+            bool,
+            bool,
+        )],
+    ) -> &mut Self {
+        self.instruction
+            .__remaining_accounts
+            .extend_from_slice(accounts);
+        self
+    }
+    #[inline(always)]
+    pub fn invoke(&self) -> solana_program::entrypoint::ProgramResult {
+        self.invoke_signed(&[])
+    }
+    #[allow(clippy::clone_on_copy)]
+    #[allow(clippy::vec_init_then_push)]
+    pub fn invoke_signed(
+        &self,
+        signers_seeds: &[&[&[u8]]],
+    ) -> solana_program::entrypoint::ProgramResult {
         let instruction = InvestCpi {
-        __program: self.instruction.__program,
-                  
-          payer: self.instruction.payer.expect("payer is not set"),
-                  
-          strategy: self.instruction.strategy.expect("strategy is not set"),
-                  
-          global_config: self.instruction.global_config.expect("global_config is not set"),
-                  
-          token_a_vault: self.instruction.token_a_vault.expect("token_a_vault is not set"),
-                  
-          token_b_vault: self.instruction.token_b_vault.expect("token_b_vault is not set"),
-                  
-          token_a_mint: self.instruction.token_a_mint.expect("token_a_mint is not set"),
-                  
-          token_b_mint: self.instruction.token_b_mint.expect("token_b_mint is not set"),
-                  
-          base_vault_authority: self.instruction.base_vault_authority.expect("base_vault_authority is not set"),
-                  
-          pool: self.instruction.pool.expect("pool is not set"),
-                  
-          token_a_token_program: self.instruction.token_a_token_program.expect("token_a_token_program is not set"),
-                  
-          token_b_token_program: self.instruction.token_b_token_program.expect("token_b_token_program is not set"),
-                  
-          memo_program: self.instruction.memo_program.expect("memo_program is not set"),
-                  
-          token_program: self.instruction.token_program.expect("token_program is not set"),
-                  
-          token_program2022: self.instruction.token_program2022.expect("token_program2022 is not set"),
-                  
-          position: self.instruction.position.expect("position is not set"),
-                  
-          raydium_protocol_position_or_base_vault_authority: self.instruction.raydium_protocol_position_or_base_vault_authority.expect("raydium_protocol_position_or_base_vault_authority is not set"),
-                  
-          position_token_account: self.instruction.position_token_account.expect("position_token_account is not set"),
-                  
-          pool_token_vault_a: self.instruction.pool_token_vault_a.expect("pool_token_vault_a is not set"),
-                  
-          pool_token_vault_b: self.instruction.pool_token_vault_b.expect("pool_token_vault_b is not set"),
-                  
-          tick_array_lower: self.instruction.tick_array_lower.expect("tick_array_lower is not set"),
-                  
-          tick_array_upper: self.instruction.tick_array_upper.expect("tick_array_upper is not set"),
-                  
-          scope_prices: self.instruction.scope_prices.expect("scope_prices is not set"),
-                  
-          token_infos: self.instruction.token_infos.expect("token_infos is not set"),
-                  
-          pool_program: self.instruction.pool_program.expect("pool_program is not set"),
-                  
-          instruction_sysvar_account: self.instruction.instruction_sysvar_account.expect("instruction_sysvar_account is not set"),
-                  
-          event_authority: self.instruction.event_authority,
-                    };
-    instruction.invoke_signed_with_remaining_accounts(signers_seeds, &self.instruction.__remaining_accounts)
-  }
+            __program: self.instruction.__program,
+
+            payer: self.instruction.payer.expect("payer is not set"),
+
+            strategy: self.instruction.strategy.expect("strategy is not set"),
+
+            global_config: self
+                .instruction
+                .global_config
+                .expect("global_config is not set"),
+
+            token_a_vault: self
+                .instruction
+                .token_a_vault
+                .expect("token_a_vault is not set"),
+
+            token_b_vault: self
+                .instruction
+                .token_b_vault
+                .expect("token_b_vault is not set"),
+
+            token_a_mint: self
+                .instruction
+                .token_a_mint
+                .expect("token_a_mint is not set"),
+
+            token_b_mint: self
+                .instruction
+                .token_b_mint
+                .expect("token_b_mint is not set"),
+
+            base_vault_authority: self
+                .instruction
+                .base_vault_authority
+                .expect("base_vault_authority is not set"),
+
+            pool: self.instruction.pool.expect("pool is not set"),
+
+            token_a_token_program: self
+                .instruction
+                .token_a_token_program
+                .expect("token_a_token_program is not set"),
+
+            token_b_token_program: self
+                .instruction
+                .token_b_token_program
+                .expect("token_b_token_program is not set"),
+
+            memo_program: self
+                .instruction
+                .memo_program
+                .expect("memo_program is not set"),
+
+            token_program: self
+                .instruction
+                .token_program
+                .expect("token_program is not set"),
+
+            token_program2022: self
+                .instruction
+                .token_program2022
+                .expect("token_program2022 is not set"),
+
+            position: self.instruction.position.expect("position is not set"),
+
+            raydium_protocol_position_or_base_vault_authority: self
+                .instruction
+                .raydium_protocol_position_or_base_vault_authority
+                .expect("raydium_protocol_position_or_base_vault_authority is not set"),
+
+            position_token_account: self
+                .instruction
+                .position_token_account
+                .expect("position_token_account is not set"),
+
+            pool_token_vault_a: self
+                .instruction
+                .pool_token_vault_a
+                .expect("pool_token_vault_a is not set"),
+
+            pool_token_vault_b: self
+                .instruction
+                .pool_token_vault_b
+                .expect("pool_token_vault_b is not set"),
+
+            tick_array_lower: self
+                .instruction
+                .tick_array_lower
+                .expect("tick_array_lower is not set"),
+
+            tick_array_upper: self
+                .instruction
+                .tick_array_upper
+                .expect("tick_array_upper is not set"),
+
+            scope_prices: self
+                .instruction
+                .scope_prices
+                .expect("scope_prices is not set"),
+
+            token_infos: self
+                .instruction
+                .token_infos
+                .expect("token_infos is not set"),
+
+            pool_program: self
+                .instruction
+                .pool_program
+                .expect("pool_program is not set"),
+
+            instruction_sysvar_account: self
+                .instruction
+                .instruction_sysvar_account
+                .expect("instruction_sysvar_account is not set"),
+
+            event_authority: self.instruction.event_authority,
+        };
+        instruction.invoke_signed_with_remaining_accounts(
+            signers_seeds,
+            &self.instruction.__remaining_accounts,
+        )
+    }
 }
 
 #[derive(Clone, Debug)]
 struct InvestCpiBuilderInstruction<'a, 'b> {
-  __program: &'b solana_program::account_info::AccountInfo<'a>,
-            payer: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                base_vault_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_a_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_b_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                memo_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_program2022: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                position: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                raydium_protocol_position_or_base_vault_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                position_token_account: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_token_vault_a: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_token_vault_b: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                tick_array_lower: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                tick_array_upper: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                scope_prices: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                pool_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                instruction_sysvar_account: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
-                /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
-  __remaining_accounts: Vec<(&'b solana_program::account_info::AccountInfo<'a>, bool, bool)>,
+    __program: &'b solana_program::account_info::AccountInfo<'a>,
+    payer: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    strategy: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    global_config: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_vault: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_mint: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    base_vault_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_a_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_b_token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    memo_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_program2022: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    position: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    raydium_protocol_position_or_base_vault_authority:
+        Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    position_token_account: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_token_vault_a: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_token_vault_b: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    tick_array_lower: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    tick_array_upper: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    scope_prices: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    token_infos: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    pool_program: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    instruction_sysvar_account: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    event_authority: Option<&'b solana_program::account_info::AccountInfo<'a>>,
+    /// Additional instruction accounts `(AccountInfo, is_writable, is_signer)`.
+    __remaining_accounts: Vec<(
+        &'b solana_program::account_info::AccountInfo<'a>,
+        bool,
+        bool,
+    )>,
 }
-
