@@ -4,10 +4,11 @@ version = "0.0.1"
 edition = "2021"
 license = "Apache-2.0"
 description = "Rust SDK for Kamino liquidity program"
-documentation = ""
-homepage = ""
-repository = ""
+documentation = "https://docs.rs/kliquidity-sdk/latest/kliquidity_sdk/"
+homepage = "https://kamino.finance"
+repository = "https://github.com/regolith-labs/kliquidity-sdk"
 readme = "./README.md"
+authors = ["Hardhat Chad"]
 keywords = ["solana"]
 
 [lib]
