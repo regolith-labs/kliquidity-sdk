@@ -113,7 +113,7 @@ impl anchor_lang::AccountSerialize for CollateralInfos {}
 
 #[cfg(feature = "anchor")]
 impl anchor_lang::Owner for CollateralInfos {
-    fn owner() -> Pubkey {
+    fn owner() -> anchor_lang::prelude::Pubkey {
         crate::YVAULTS_ID
     }
 }

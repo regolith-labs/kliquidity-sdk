@@ -112,7 +112,7 @@ impl anchor_lang::AccountSerialize for ScopeChainAccount {}
 
 #[cfg(feature = "anchor")]
 impl anchor_lang::Owner for ScopeChainAccount {
-    fn owner() -> Pubkey {
+    fn owner() -> anchor_lang::prelude::Pubkey {
         crate::YVAULTS_ID
     }
 }
