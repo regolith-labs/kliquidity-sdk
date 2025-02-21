@@ -29,5 +29,5 @@ num-traits = "0.2.19"
 serde = { version = "1.0", features = ["derive"], optional = true }
 serde-big-array = { version = "0.5", optional = true }
 serde_with = { version = "3.12", optional = true }
-solana-program = "1.18"
+solana-program = "2.1.14"
 thiserror = "2.0.11"
